@@ -1,0 +1,29 @@
+---
+- name: copy configs
+  copy: 
+    src: ./roles/k3s/argocd/templates/
+    dest: /opt/argocd
+    owner: administrator 
+    group: administrator 
+    mode: "0664"
+    force: yes 
+
+- name: copy configs
+  copy: 
+    src: "{{ lookup('env','kubeseal') }}"
+    dest: /opt/kubeseal.yaml
+    owner: administrator 
+    group: administrator 
+    mode: "0600"
+    force: yes 
+
+- name: Apply Kubeseal master key
+  command: k3s kubectl apply -f /opt/kubeseal.yaml --force
+
+- name: Apply ArgoCD
+  command: k3s kubectl apply -f /opt/argocd/argocd.yaml -n argocd
+
+- name: Apply ArgoCD Apps
+  command: k3s kubectl apply -f /opt/argocd/apps.yaml -n argocd
+
+  

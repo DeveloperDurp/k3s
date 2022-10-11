@@ -1,0 +1,47 @@
+- name: Deploy SSH Key (administrator)
+  copy:
+    dest: /home/administrator/.ssh/authorized_keys
+    src: files/authorized_keys_administrator
+    force: true 
+
+- name: ensure ssh folder exists for user
+  file: 
+    path: /home/user/.ssh
+    state: directory
+
+- name: Deploy SSH Key (user)
+  copy:
+    dest: /home/user/.ssh/authorized_keys
+    src: files/authorized_keys_user
+    force: true 
+
+- name: Remove Root SSH Configuration
+  file: 
+    path: /root/.ssh
+    state: absent
+
+- name: Copy Secured SSHD Configuration
+  copy: 
+    src: files/sshd_config_secured 
+    dest: /etc/ssh/sshd_config 
+    owner: root 
+    group: root 
+    mode: "0644"
+  when: ansible_os_family == "Debian"   
+
+- name: Copy Secured SSHD Configuration
+  copy: 
+    src: files/sshd_config_secured_redhat 
+    dest: /etc/ssh/sshd_config 
+    owner: root 
+    group: root 
+    mode: "0644"    
+  when: ansible_os_family == "RedHat"   
+
+- name: Restart SSHD
+  systemd:
+    name: sshd
+    daemon_reload: yes
+    state: restarted
+    enabled: yes
+  ignore_errors: yes

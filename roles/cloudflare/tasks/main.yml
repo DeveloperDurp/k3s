@@ -1,0 +1,11 @@
+---
+- name: Update Cloudflare
+  community.general.cloudflare_dns:
+    zone: "{{ item.zone }}"
+    record: "{{ item.record }}"
+    state: "{{ item.state }}"
+    type: A
+    proxied: "{{ item.proxied }}"
+    value: "{{ lookup('env','external_ip') }}"
+    api_token: "{{ lookup('env','cloudflareapi') }}"
+  with_items: "{{ DNS }}"     

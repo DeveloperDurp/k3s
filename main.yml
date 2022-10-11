@@ -1,0 +1,50 @@
+---      
+- hosts: all
+  gather_facts: yes
+  become: yes
+  roles:
+    - base
+
+- hosts: k3s_cluster
+  gather_facts: yes
+  become: yes
+  roles:
+    - k3s/prereq
+    - k3s/download
+
+- hosts: master
+  become: yes
+  roles: 
+    - k3s/master
+
+- hosts: node
+  become: yes
+  roles:
+    - k3s/node
+
+- hosts: master
+  become: yes
+  roles:
+    - role: k3s/post    
+
+- hosts: master[0]
+  become: yes
+  roles:
+    - k3s/argocd
+
+- hosts: master[0]
+  become: no
+  roles:
+    - cloudflare
+  vars:
+    DNS:
+      - {record: 'bitwarden', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'nextcloud', zone: 'durp.info', proxied: 'yes', state: 'present'} 
+      - {record: 'grafana', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'alertmanager', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'prometheus', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'kong', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'links', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'whoogle', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'kuma', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'oauth', zone: 'durp.info', proxied: 'yes', state: 'present'}

@@ -1,0 +1,53 @@
+---
+- name: Update packages
+  apt:
+    name: '*'
+    state: latest
+    update_cache: yes
+    only_upgrade: yes
+  when: ansible_os_family == "Debian"    
+  retries: 3
+  delay: 10
+
+- name: Remove packages not needed anymore
+  apt:
+    autoremove: yes  
+  when: ansible_os_family == "Debian"        
+  retries: 3
+  delay: 10      
+      
+- name: Install required packages Debian
+  apt: 
+    state: latest 
+    pkg: "{{ item }}"
+  with_items:  "{{ required_packages }}" 
+  when: ansible_os_family == "Debian"     
+  retries: 3
+  delay: 10  
+    
+- name: Update packages RedHat
+  yum: 
+    name: '*'
+    state: latest
+    update_cache: yes
+    update_only: yes
+  when: ansible_os_family == "RedHat"  
+  retries: 3
+  delay: 10  
+
+- name: Remove packates not needed anymore
+  yum:
+    autoremove: yes
+  when: ansible_os_family == "RedHat"      
+  retries: 3
+  delay: 10  
+      
+- name: Install required packages RedHat
+  yum: 
+    state: latest 
+    update_cache: yes
+    pkg: "{{ item }}"
+  with_items:  "{{ redhat_required_packages }}" 
+  when: ansible_os_family == "RedHat"   
+  retries: 3
+  delay: 10  
