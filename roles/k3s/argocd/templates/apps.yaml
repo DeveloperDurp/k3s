@@ -8,7 +8,7 @@ spec:
   source:
     repoURL: https://github.com/DeveloperDurp/homelab.git
     targetRevision: main
-    path: argocd/argocd
+    path: argocd
     directory:
       recurse: true
   destination:
