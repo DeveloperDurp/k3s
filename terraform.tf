@@ -150,7 +150,7 @@ resource "proxmox_vm_qemu" "kasm" {
   ciuser      = "administrator"
   vmid        = 20110
   name        = "kasm"
-  target_node = overlord
+  target_node = "overlord"
   clone       = "CentOS9-Template"
   full_clone  = true
   os_type     = "cloud-init"
