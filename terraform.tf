@@ -155,7 +155,7 @@ resource "proxmox_vm_qemu" "kasm" {
   full_clone  = true
   os_type     = "cloud-init"
   agent       = 1
-  cores       = 2
+  cores       = 4
   sockets     = 1
   cpu         = "host"
   memory      = 4096
