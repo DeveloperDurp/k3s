@@ -129,3 +129,15 @@ ansible-update:
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: always 
+
+ansible-update-dns:
+  stage: apply
+  image:
+    name: ubuntu:latest
+  script:
+    - apt update && apt install ansible -y
+    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
+    - ansible-playbook $CI_PROJECT_DIR/ansible/dns.yml          
+  only:
+      changes:
+        - ansible/dns.yml     
