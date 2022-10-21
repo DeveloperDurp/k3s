@@ -44,7 +44,7 @@
       - {record: 'alertmanager', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'prometheus', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'kong', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'links', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: '@', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'whoogle', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'kuma', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'oauth', zone: 'durp.info', proxied: 'yes', state: 'present'}
