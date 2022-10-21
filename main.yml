@@ -32,20 +32,3 @@
   roles:
     - k3s/argocd
 
-- hosts: master[0]
-  become: no
-  roles:
-    - cloudflare
-  vars:
-    DNS:
-      - {record: 'bitwarden', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'nextcloud', zone: 'durp.info', proxied: 'yes', state: 'present'} 
-      - {record: 'grafana', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'alertmanager', zone: 'durp.info', proxied: 'yes', state: 'absent'}
-      - {record: 'prometheus', zone: 'durp.info', proxied: 'yes', state: 'absent'}
-      - {record: 'kong', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: '@', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'whoogle', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'kuma', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'oauth', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'kasm', zone: 'durp.info', proxied: 'yes', state: 'present'}
