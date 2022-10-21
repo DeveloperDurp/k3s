@@ -118,3 +118,13 @@ destroy:
       - main.yml     
   when: manual          
 
+ansible-update:
+  image:
+    name: ubuntu:latest
+  script:
+    - apt update && apt install ansible -y
+    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
+    - ansible-playbook $CI_PROJECT_DIR/update.yml    
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always 
