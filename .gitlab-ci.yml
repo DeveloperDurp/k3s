@@ -119,6 +119,7 @@ destroy:
   when: manual          
 
 ansible-update:
+  stage: apply
   image:
     name: ubuntu:latest
   script:
