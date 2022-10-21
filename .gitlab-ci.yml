@@ -140,4 +140,4 @@ ansible-update-dns:
     - ansible-playbook $CI_PROJECT_DIR/ansible/dns.yml          
   only:
       changes:
-        - ansible/dns.yml     
+        - tasks/dns.yml     
