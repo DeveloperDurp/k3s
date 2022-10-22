@@ -1,5 +1,4 @@
 - hosts: master[0]
-  become: no
   roles:
     - cloudflare
   vars:
