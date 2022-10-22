@@ -137,7 +137,7 @@ ansible-update-dns:
   script:
     - apt update && apt install ansible -y
     - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-    - ansible-playbook $CI_PROJECT_DIR/ansible/dns.yml          
+    - ansible-playbook $CI_PROJECT_DIR/tasks/dns.yml          
   only:
       changes:
         - tasks/dns.yml     
