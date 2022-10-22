@@ -35,7 +35,7 @@ plan:
     changes:
       - terraform.tf 
       - terraform.tfvars   
-      - tasks/main.yml      
+      - jobs/main.yml      
 
 apply:
   stage: apply
@@ -67,7 +67,7 @@ apply:
     changes:
       - terraform.tf 
       - terraform.tfvars    
-      - tasks/main.yml      
+      - jobs/main.yml      
   when: manual      
 
 ansible-apply:
@@ -80,14 +80,14 @@ ansible-apply:
   script:
     - apt update && apt install ansible -y
     - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-    - ansible-playbook $CI_PROJECT_DIR/tasks/main.yml
+    - ansible-playbook $CI_PROJECT_DIR/jobs/main.yml
   needs:
     - apply
   only:
     changes:
       - terraform.tf 
       - terraform.tfvars 
-      - tasks/main.yml           
+      - jobs/main.yml           
     
 destroy:
   stage: destroy
@@ -115,7 +115,7 @@ destroy:
     changes:
       - terraform.tf 
       - terraform.tfvars 
-      - tasks/main.yml     
+      - jobs/main.yml     
   when: manual          
 
 ansible-update:
@@ -125,7 +125,7 @@ ansible-update:
   script:
     - apt update && apt install ansible -y
     - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-    - ansible-playbook $CI_PROJECT_DIR/tasks/update.yml    
+    - ansible-playbook $CI_PROJECT_DIR/jobs/update.yml    
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: always 
@@ -137,7 +137,7 @@ ansible-update-dns:
   script:
     - apt update && apt install ansible -y
     - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-    - ansible-playbook $CI_PROJECT_DIR/tasks/dns.yml          
+    - ansible-playbook $CI_PROJECT_DIR/jobs/dns.yml          
   only:
       changes:
-        - tasks/dns.yml     
+        - jobs/dns.yml     
