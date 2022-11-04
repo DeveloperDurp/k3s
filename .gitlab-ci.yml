@@ -15,9 +15,6 @@ plan:
     ARGUMENTS: -var=pm_password=$pm_password -var=pm_api_url=$pm_api_url -var-file=terraform.tfvars
   allow_failure: false
   extends: .terraform_plan
-  only:
-    changes:
-      - terraform/*  
   rules:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"      
 
@@ -33,6 +30,10 @@ apply:
       - terraform/*       
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        compare_to: refs/heads/main
+        paths:
+          - '/terraform/*'
 
 
 #apply:
