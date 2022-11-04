@@ -85,6 +85,9 @@ resource "proxmox_vm_qemu" "k3server" {
   sshkeys      = "${var.sshkeys}"
 }
 
+#kasm
+#------------------------------------------------------
+
 resource "proxmox_vm_qemu" "kasm" {
   count       = 1
   ciuser      = "administrator"
