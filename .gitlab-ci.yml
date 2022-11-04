@@ -11,7 +11,7 @@ include:
 plan:
   stage: plan
   variables:
-    WORKDIR: $CI_PROJECT_DIR/terraform"
+    WORKDIR: $CI_PROJECT_DIR/terraform
     ARGUMENTS: "-var='pm_password=$pm_password' -var='pm_api_url=$pm_api_url'"
   allow_failure: false
   extends: .terraform_plan
