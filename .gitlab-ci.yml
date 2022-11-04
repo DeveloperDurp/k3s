@@ -24,10 +24,7 @@ apply:
     WORKDIR: $CI_PROJECT_DIR/terraform
     ARGUMENTS: -var=pm_password=$pm_password -var=pm_api_url=$pm_api_url -var-file=terraform.tfvars
   allow_failure: false
-  extends: .terraform_apply
-  only:
-    changes:
-      - terraform/*       
+  extends: .terraform_apply   
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
