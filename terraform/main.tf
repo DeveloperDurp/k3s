@@ -53,18 +53,18 @@ resource "proxmox_vm_qemu" "k3server" {
   full_clone  = true
   os_type     = "cloud-init"
   agent       = 1
-  cores       = var.k3server.cores[count.index]
+  cores       = var.k3server.cores
   sockets     = 1
   cpu         = "host"
-  memory      = var.k3server.memory[count.index]
+  memory      = var.k3server.memory
   scsihw      = "virtio-scsi-pci"
   bootdisk    = "scsi0"
   boot        = "c"
   onboot      = true
   disk {
-    size    = var.k3server.drive[count.index]
+    size    = var.k3server.drive
     type    = "scsi"
-    storage = var.k3server.storage[count.index]
+    storage = var.k3server.storage
     ssd     = 1
     backup  = 0
   }

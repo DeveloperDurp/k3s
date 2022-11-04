@@ -24,7 +24,6 @@ variable "pm_user" {
     default = "root@pam"
 }
 
-
 variable "k3master" {
     description = "Defaults of master nodes in K3S"
     type = object({
