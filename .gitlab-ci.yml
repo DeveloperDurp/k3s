@@ -7,12 +7,7 @@ include:
   - project: 'developerdurp/jobtemplates'
     ref: main
     file: 'terraform.yml'
-
-before_script:
-  - cat $tfvars >> terraform.tfvars
-  - cat $ansible > ansible
-  - chmod 600 -R $CI_PROJECT_DIR   
-
+    
 plan:
   stage: plan
   variables:
