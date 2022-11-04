@@ -3,6 +3,11 @@ stages:
   - apply
   - destroy
 
+include:
+  - project: 'developerdurp/jobtemplates'
+    ref: main
+    file: 'terraform.yml'
+
 before_script:
   - cat $tfvars >> terraform.tfvars
   - cat $ansible > ansible
@@ -10,138 +15,117 @@ before_script:
 
 plan:
   stage: plan
-  allow_failure: true
-  image:
-    name: hashicorp/terraform:light
-    entrypoint:
-      - '/usr/bin/env'
-      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
   variables:
-    PLAN: plan.tfplan
-    JSON_PLAN_FILE: tfplan.json
-    TF_IN_AUTOMATION: "true"
-    GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_PROJECT_NAME}
-  cache:
-    key: "$CI_COMMIT_SHA"
-    paths:
-      - .terraform
-  script:
-    - apk add --update curl jq
-    - alias convert_report="jq -r '([.resource_changes[].change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
-    - terraform --version
-    - terraform init -reconfigure -backend-config="address=${GITLAB_TF_ADDRESS}" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="username=gitlab-ci-token" -backend-config="password=${CI_JOB_TOKEN}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"  
-    - terraform plan -var-file=terraform.tfvars -out=$PLAN
-    - terraform show --json $PLAN | convert_report > $JSON_PLAN_FILE
-  artifacts:
-    reports:
-      terraform: $JSON_PLAN_FILE
+    WORKDIR: $CI_PROJECT_DIR\terraform
+    ARGUMENTS: 
+  allow_failure: false
+  extends: .terraform_plan
   only:
     changes:
-      - terraform.tf 
-      - terraform.tfvars   
-      - jobs/main.yml      
+      - terraform/*   
 
-apply:
-  stage: apply
-  image:
-    name: hashicorp/terraform:light
-    entrypoint:
-      - '/usr/bin/env'
-      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-  variables:
-    PLAN: plan.tfplan
-    JSON_PLAN_FILE: tfplan.json
-    TF_IN_AUTOMATION: "true"
-    GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_PROJECT_NAME}
-  cache:
-    key: "$CI_COMMIT_SHA"
-    paths:
-      - .terraform
-  script:    
-    - apk add --update curl jq
-    - alias convert_report="jq -r '([.resource_changes[].change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
-    - terraform --version
-    - terraform init -reconfigure -backend-config="address=${GITLAB_TF_ADDRESS}" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="username=gitlab-ci-token" -backend-config="password=${CI_JOB_TOKEN}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"      
-    - terraform apply -auto-approve -var-file=terraform.tfvars
-  after_script:
-    - curl --request PUT --header "PRIVATE-TOKEN:${jobtoken}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/variables/kubeconfig" --form "value=$(cat config)" > null
-  dependencies:
-    - plan 
-  only:
-    changes:
-      - terraform.tf 
-      - terraform.tfvars    
-      - jobs/main.yml      
-  when: manual      
-
-ansible-apply:
-  stage: apply
-  variables:
-    DEBIAN_FRONTEND: noninteractive
-    K8S_AUTH_KUBECONFIG: config
-  image:
-    name: ubuntu:latest
-  script:
-    - apt update && apt install ansible -y
-    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-    - ansible-playbook $CI_PROJECT_DIR/jobs/main.yml
-  needs:
-    - apply
-  only:
-    changes:
-      - terraform.tf 
-      - terraform.tfvars 
-      - jobs/main.yml           
-    
-destroy:
-  stage: destroy
-  image:
-    name: hashicorp/terraform:light
-    entrypoint:
-      - '/usr/bin/env'
-      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-  variables:
-    PLAN: plan.tfplan
-    JSON_PLAN_FILE: tfplan.json
-    TF_IN_AUTOMATION: "true"
-    GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_PROJECT_NAME}
-  cache:
-    key: "$CI_COMMIT_SHA"
-    paths:
-      - .terraform
-  script:
-    - apk add --update curl jq
-    - alias convert_report="jq -r '([.resource_changes[].change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
-    - terraform --version
-    - terraform init -reconfigure -backend-config="address=${GITLAB_TF_ADDRESS}" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="username=gitlab-ci-token" -backend-config="password=${CI_JOB_TOKEN}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"      
-    - terraform destroy -auto-approve -var-file=terraform.tfvars
-  only:
-    changes:
-      - terraform.tf 
-      - terraform.tfvars 
-      - jobs/main.yml     
-  when: manual          
-
-ansible-update:
-  stage: apply
-  image:
-    name: ubuntu:latest
-  script:
-    - apt update && apt install ansible -y
-    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-    - ansible-playbook $CI_PROJECT_DIR/jobs/update.yml    
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-      when: always 
-
-ansible-update-dns:
-  stage: apply
-  image:
-    name: ubuntu:latest
-  script:
-    - apt update && apt install ansible -y
-    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-    - ansible-playbook $CI_PROJECT_DIR/jobs/dns.yml          
-  only:
-      changes:
-        - jobs/dns.yml     
+#apply:
+#  stage: apply
+#  image:
+#    name: hashicorp/terraform:light
+#    entrypoint:
+#      - '/usr/bin/env'
+#      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+#  variables:
+#    PLAN: plan.tfplan
+#    JSON_PLAN_FILE: tfplan.json
+#    TF_IN_AUTOMATION: "true"
+#    GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_PROJECT_NAME}
+#  cache:
+#    key: "$CI_COMMIT_SHA"
+#    paths:
+#      - .terraform
+#  script:    
+#    - apk add --update curl jq
+#    - alias convert_report="jq -r '([.resource_changes[].change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
+#    - terraform --version
+#    - terraform init -reconfigure -backend-config="address=${GITLAB_TF_ADDRESS}" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="username=gitlab-ci-token" -backend-config="password=${CI_JOB_TOKEN}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"      
+#    - terraform apply -auto-approve -var-file=terraform.tfvars
+#  after_script:
+#    - curl --request PUT --header "PRIVATE-TOKEN:${jobtoken}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/variables/kubeconfig" --form "value=$(cat config)" > null
+#  dependencies:
+#    - plan 
+#  only:
+#    changes:
+#      - terraform.tf 
+#      - terraform.tfvars    
+#      - jobs/main.yml      
+#  when: manual      
+#
+#ansible-apply:
+#  stage: apply
+#  variables:
+#    DEBIAN_FRONTEND: noninteractive
+#    K8S_AUTH_KUBECONFIG: config
+#  image:
+#    name: ubuntu:latest
+#  script:
+#    - apt update && apt install ansible -y
+#    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
+#    - ansible-playbook $CI_PROJECT_DIR/jobs/main.yml
+#  needs:
+#    - apply
+#  only:
+#    changes:
+#      - terraform.tf 
+#      - terraform.tfvars 
+#      - jobs/main.yml           
+#    
+#destroy:
+#  stage: destroy
+#  image:
+#    name: hashicorp/terraform:light
+#    entrypoint:
+#      - '/usr/bin/env'
+#      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
+#  variables:
+#    PLAN: plan.tfplan
+#    JSON_PLAN_FILE: tfplan.json
+#    TF_IN_AUTOMATION: "true"
+#    GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_PROJECT_NAME}
+#  cache:
+#    key: "$CI_COMMIT_SHA"
+#    paths:
+#      - .terraform
+#  script:
+#    - apk add --update curl jq
+#    - alias convert_report="jq -r '([.resource_changes[].change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
+#    - terraform --version
+#    - terraform init -reconfigure -backend-config="address=${GITLAB_TF_ADDRESS}" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="username=gitlab-ci-token" -backend-config="password=${CI_JOB_TOKEN}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"      
+#    - terraform destroy -auto-approve -var-file=terraform.tfvars
+#  only:
+#    changes:
+#      - terraform.tf 
+#      - terraform.tfvars 
+#      - jobs/main.yml     
+#  when: manual          
+#
+#ansible-update:
+#  stage: apply
+#  image:
+#    name: ubuntu:latest
+#  script:
+#    - apt update && apt install ansible -y
+#    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
+#    - ansible-playbook $CI_PROJECT_DIR/jobs/update.yml    
+#  rules:
+#    - if: $CI_PIPELINE_SOURCE == "schedule"
+#      when: always 
+#
+#ansible-update-dns:
+#  stage: apply
+#  image:
+#    name: ubuntu:latest
+#  script:
+#    - apt update && apt install ansible -y
+#    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
+#    - ansible-playbook $CI_PROJECT_DIR/jobs/dns.yml          
+#  only:
+#      changes:
+#        - jobs/dns.yml     
+#
