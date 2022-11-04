@@ -39,18 +39,6 @@ variable "k3master" {
         tag      = number
         ip       = list(number)   
     })
-    default = {
-        count    = "1"
-        name     = ["master01"]
-        cores    = "2"
-        memory   = "2048"
-        drive    = "20G"
-        storage  = "domains"
-        template = "CentOS9-Template"
-        node     = "overlord"
-        tag      = "20"
-        ip       = ["121"]
-    }
 }
 
 variable "k3server" {
@@ -67,16 +55,4 @@ variable "k3server" {
         tag      = number
         ip       = list(number)   
     })
-        default = {
-        count    = "1"
-        name     = ["node01"]
-        cores    = "2"
-        memory   = "4096"
-        drive    = "60G"
-        storage  = "domains"
-        template = "CentOS9-Template"
-        node     = "overlord"
-        tag      = "20"
-        ip       = ["124"]
-    }
 }
