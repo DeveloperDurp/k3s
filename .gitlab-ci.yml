@@ -11,7 +11,7 @@ include:
 plan:
   stage: plan
   variables:
-    WORKDIR: $CI_PROJECT_DIR\terraform
+    WORKDIR: $CI_PROJECT_DIR/terraform
     ARGUMENTS: 
   allow_failure: false
   extends: .terraform_plan
