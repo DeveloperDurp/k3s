@@ -31,10 +31,10 @@ plan:
     - terraform --version
     - terraform init -reconfigure -backend-config="address=${GITLAB_TF_ADDRESS}" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="username=gitlab-ci-token" -backend-config="password=${CI_JOB_TOKEN}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"  
     - terraform plan -var-file=terraform.tfvars -out=$PLAN
-    - terraform show --json $PLAN | convert_report > $PLAN_JSON
+    - terraform show --json $PLAN | convert_report > $JSON_PLAN_FILE
   artifacts:
     reports:
-      terraform: $PLAN_JSON
+      terraform: $JSON_PLAN_FILE
   only:
     changes:
       - terraform.tf 
