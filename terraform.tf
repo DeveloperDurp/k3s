@@ -145,4 +145,45 @@ resource "proxmox_vm_qemu" "k3server" {
   sshkeys      = "${var.sshkeys}"
 }
 
+resource "proxmox_vm_qemu" "kasm" {
+  count       = 1
+  ciuser      = "administrator"
+  vmid        = 20110
+  name        = "kasm"
+  target_node = "overlord"
+  clone       = "CentOS9-Template"
+  full_clone  = true
+  os_type     = "cloud-init"
+  agent       = 1
+  cores       = 4
+  sockets     = 1
+  cpu         = "host"
+  memory      = 4096
+  scsihw      = "virtio-scsi-pci"
+  bootdisk    = "scsi0"
+  boot        = "c"
+  onboot      = true
+  disk {
+    size    = "60G"
+    type    = "scsi"
+    storage = "local-zfs"
+    ssd     = 1
+    backup  = 0
+  }
+  network {
+    model  = "virtio"
+    bridge = "vmbr1"
+    tag    = 20
+  }
+  lifecycle {
+    ignore_changes = [
+      network,
+    ]
+  }
+  #Cloud Init Settings
+  ipconfig0    = "ip=192.168.20.110/24,gw=192.168.20.1"
+  searchdomain = "durp.loc"
+  nameserver   = "${var.dnsserver}"
+  sshkeys      = "${var.sshkeys}"
+}
 
