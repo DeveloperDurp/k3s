@@ -58,10 +58,10 @@ variable "k3server" {
     type = object({
         count    = number
         name     = list(string)
-        cores    = list(number)
-        memory   = list(number)
-        drive    = list(string)
-        storage  = list(string)
+        cores    = number
+        memory   = number
+        drive    = string
+        storage  = string
         template = string
         node     = string
         tag      = number
