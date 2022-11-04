@@ -30,7 +30,7 @@ apply:
       changes:
         compare_to: refs/heads/main
         paths:
-          - '/terraform/*'
+          - 'terraform/*'
 
 
 #apply:
