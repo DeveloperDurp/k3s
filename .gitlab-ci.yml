@@ -1,6 +1,6 @@
 stages:
-  - plan
-  - apply
+  - lint
+  - build
   - destroy
 
 include:
@@ -9,15 +9,29 @@ include:
     file: 'terraform.yml'
     
 plan:
-  stage: plan
+  stage: lint
   variables:
     WORKDIR: $CI_PROJECT_DIR/terraform
     ARGUMENTS: -var=pm_password=$pm_password -var=pm_api_url=$pm_api_url -var-file=terraform.tfvars
   allow_failure: false
   extends: .terraform_plan
-  only:
-    changes:
-      - terraform/*   
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"      
+
+apply:
+  stage: build
+  variables:
+    WORKDIR: $CI_PROJECT_DIR/terraform
+    ARGUMENTS: -var=pm_password=$pm_password -var=pm_api_url=$pm_api_url -var-file=terraform.tfvars
+  allow_failure: false
+  extends: .terraform_apply   
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        compare_to: refs/heads/main
+        paths:
+          - '/terraform/*'
+
 
 #apply:
 #  stage: apply
