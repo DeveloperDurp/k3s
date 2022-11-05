@@ -43,7 +43,9 @@ k3s-ansible:
     FILE: main.yml
     REQUIREMENTS: requirements.yml
   allow_failure: false
-  extends: .ansible_apply 
+  extends: .ansible_apply
+  before_script: 
+    - cat $ansible > ansible 
   #rules:
   #  - if: '$CI_COMMIT_BRANCH == "main"'
   #  - changes:
