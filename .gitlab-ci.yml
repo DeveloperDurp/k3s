@@ -104,10 +104,10 @@ k3s-update:
   extends: .ansible_apply
   before_script: 
     - cat $ansible > $WORKDIR/ansible   
-  #rules:
-  #  - if: $CI_PIPELINE_SOURCE == "schedule"
-  #    when: always 
-  #  - when: never        
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always 
+    - when: never        
 
 
 #destroy:
@@ -138,15 +138,4 @@ k3s-update:
 #      - terraform.tfvars 
 #      - jobs/main.yml     
 #  when: manual          
-#
-#ansible-update:
-#  stage: apply
-#  image:
-#    name: ubuntu:latest
-#  script:
-#    - apt update && apt install ansible -y
-#    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-#    - ansible-playbook $CI_PROJECT_DIR/jobs/update.yml    
-#  rules:
-#    - if: $CI_PIPELINE_SOURCE == "schedule"
-#      when: always 
+
