@@ -62,6 +62,21 @@ k3s-ansible:
       when: always
     - when: never    
 
+k3s-dns:
+  stage: build
+  variables:
+    WORKDIR: $CI_PROJECT_DIR/ansible
+    FILE: dns.yml
+    REQUIREMENTS: requirements.yml
+  allow_failure: false
+  extends: .ansible_apply
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        paths:
+          - 'ansible/*'  
+      when: always
+    - when: never    
 
 
 #ansible-apply:
