@@ -42,7 +42,7 @@ k3s:
       when: always
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        file:
+        paths:
           - 'ansible/dns.yml'
       when: never       
     - when: never          
@@ -67,7 +67,7 @@ k3s-ansible:
       when: always
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        file:
+        paths:
           - 'ansible/dns.yml'
       when: never      
     - when: never    
@@ -85,7 +85,7 @@ k3s-dns:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        file:
+        paths:
           - 'ansible/dns.yml'
       when: always
     - when: never    
