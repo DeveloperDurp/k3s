@@ -39,8 +39,9 @@ k3s:
 k3s-ansible:
   stage: build
   variables:
-    FILE: $CI_PROJECT_DIR/ansible/main.yml
-    REQUIREMENTS: $CI_PROJECT_DIR/ansible/requirements.yml
+    WORKDIR: $CI_PROJECT_DIR/ansible
+    FILE: main.yml
+    REQUIREMENTS: requirements.yml
   allow_failure: false
   extends: .ansible_apply 
   #rules:
