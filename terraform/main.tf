@@ -126,3 +126,4 @@ resource "proxmox_vm_qemu" "kasm" {
   nameserver   = "${var.dnsserver}"
   sshkeys      = "${var.sshkeys}"
 }
+
