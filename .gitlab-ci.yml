@@ -40,6 +40,11 @@ k3s:
           - 'terraform/*'     
           - 'ansible/*'  
       when: always
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        file:
+          - 'ansible/dns.yml'
+      when: never       
     - when: never          
 
 k3s-ansible:
@@ -60,6 +65,11 @@ k3s-ansible:
           - 'terraform/*'     
           - 'ansible/*'  
       when: always
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        file:
+          - 'ansible/dns.yml'
+      when: never      
     - when: never    
 
 k3s-dns:
@@ -75,8 +85,8 @@ k3s-dns:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        paths:
-          - 'ansible/*'  
+        file:
+          - 'ansible/dns.yml'
       when: always
     - when: never    
 
