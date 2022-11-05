@@ -47,7 +47,7 @@ k3s-ansible:
   #  - if: '$CI_COMMIT_BRANCH == "main"'
   #  - changes:
   #      - 'terraform/*'
-#
+
 
 #
 #ansible-apply:
