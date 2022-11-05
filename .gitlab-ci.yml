@@ -70,6 +70,8 @@ k3s-dns:
     REQUIREMENTS: requirements.yml
   allow_failure: false
   extends: .ansible_apply
+  before_script: 
+    - cat $ansible > $WORKDIR/ansible 
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
