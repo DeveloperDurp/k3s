@@ -33,8 +33,7 @@ k3s:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
     - changes:
-        paths:
-          - 'terraform'
+        - 'terraform/*'  
 
 k3s-ansible:
   stage: build
