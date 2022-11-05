@@ -36,7 +36,6 @@ k3s:
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
-        compare_to: refs/heads/main
         paths:
           - 'terraform/*'       
       when: always
