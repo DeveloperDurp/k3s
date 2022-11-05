@@ -49,7 +49,7 @@ k3s-ansible:
   #      - 'terraform/*'
 
 
-#
+
 #ansible-apply:
 #  stage: apply
 #  variables:
