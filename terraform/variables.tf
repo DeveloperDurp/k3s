@@ -53,3 +53,4 @@ variable "k3server" {
     ip       = list(number)
   })
 }
+#test
