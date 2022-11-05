@@ -23,7 +23,7 @@ plan:
     - changes:
         - 'terraform/*'      
 
-apply:
+k3s:
   stage: build
   variables:
     WORKDIR: $CI_PROJECT_DIR/terraform
@@ -35,7 +35,7 @@ apply:
     - changes:
         - 'terraform/*'
 
-k3s:
+k3s-ansible:
   stage: build
   variables:
     FILE: $CI_PROJECT_DIR/jobs/main.yml
