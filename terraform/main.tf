@@ -29,7 +29,6 @@ resource "proxmox_vm_qemu" "k3master" {
   network {
     model  = "virtio"
     bridge = "vmbr1"
-    tag    = var.k3master.tag
   }
   lifecycle {
     ignore_changes = [
@@ -71,7 +70,6 @@ resource "proxmox_vm_qemu" "k3server" {
   network {
     model  = "virtio"
     bridge = "vmbr1"
-    tag    = var.k3server.tag
   }
   lifecycle {
     ignore_changes = [
@@ -116,7 +114,6 @@ resource "proxmox_vm_qemu" "kasm" {
   network {
     model  = "virtio"
     bridge = "vmbr1"
-    tag    = 20
   }
   lifecycle {
     ignore_changes = [

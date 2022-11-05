@@ -10,7 +10,6 @@ k3master = {
   storage  = "domains"
   template = "CentOS9-Template"
   node     = "overlord"
-  tag      = "20"
   ip       = ["121", "122", "123"]
 }
 
@@ -23,6 +22,5 @@ k3server = {
   storage  = "NVMeSSD"
   template = "CentOS9-Template"
   node     = "overlord"
-  tag      = "20"
   ip       = ["124", "125", "126"]
 }
