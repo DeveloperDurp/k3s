@@ -35,7 +35,7 @@ variable "k3master" {
     storage  = string
     template = string
     node     = string
-    ip       = list(number)   
+    ip       = list(number)  
   })
 }
 
@@ -50,6 +50,6 @@ variable "k3server" {
     storage  = string
     template = string
     node     = string
-    ip       = list(number)   
+    ip       = list(number)
   })
 }
