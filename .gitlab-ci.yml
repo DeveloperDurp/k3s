@@ -102,10 +102,12 @@ k3s-update:
     REQUIREMENTS: requirements.yml
   allow_failure: false
   extends: .ansible_apply
-  rules:
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-      when: always 
-    - when: never        
+  before_script: 
+    - cat $ansible > $WORKDIR/ansible   
+  #rules:
+  #  - if: $CI_PIPELINE_SOURCE == "schedule"
+  #    when: always 
+  #  - when: never        
 
 
 #destroy:
