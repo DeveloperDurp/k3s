@@ -78,26 +78,20 @@ k3s-dns:
       when: always
     - when: never    
 
+k3s-update:
+  stage: build
+  variables:
+    WORKDIR: $CI_PROJECT_DIR/ansible
+    FILE: update.yml
+    REQUIREMENTS: requirements.yml
+  allow_failure: false
+  extends: .ansible_apply
+  rules:
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: always 
+    - when: never        
 
-#ansible-apply:
-#  stage: apply
-#  variables:
-#    DEBIAN_FRONTEND: noninteractive
-#    K8S_AUTH_KUBECONFIG: config
-#  image:
-#    name: ubuntu:latest
-#  script:
-#    - apt update && apt install ansible -y
-#    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-#    - ansible-playbook $CI_PROJECT_DIR/jobs/main.yml
-#  needs:
-#    - apply
-#  only:
-#    changes:
-#      - terraform.tf 
-#      - terraform.tfvars 
-#      - jobs/main.yml           
-#    
+
 #destroy:
 #  stage: destroy
 #  image:
@@ -138,16 +132,3 @@ k3s-dns:
 #  rules:
 #    - if: $CI_PIPELINE_SOURCE == "schedule"
 #      when: always 
-#
-#ansible-update-dns:
-#  stage: apply
-#  image:
-#    name: ubuntu:latest
-#  script:
-#    - apt update && apt install ansible -y
-#    - ansible-galaxy install -r $CI_PROJECT_DIR/group_vars/requirements.yml
-#    - ansible-playbook $CI_PROJECT_DIR/jobs/dns.yml          
-#  only:
-#      changes:
-#        - jobs/dns.yml     
-#
