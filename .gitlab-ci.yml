@@ -37,7 +37,8 @@ k3s:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         paths:
-          - 'terraform/*'       
+          - 'terraform/*'     
+          - 'ansible/*'  
       when: always
     - when: never          
 
@@ -51,10 +52,15 @@ k3s-ansible:
   extends: .ansible_apply
   before_script: 
     - cat $ansible > $WORKDIR/ansible 
-  #rules:
-  #  - if: '$CI_COMMIT_BRANCH == "main"'
-  #  - changes:
-  #      - 'terraform/*'
+  needs: ["k3s"]
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        paths:
+          - 'terraform/*'     
+          - 'ansible/*'  
+      when: always
+    - when: never    
 
 
 
