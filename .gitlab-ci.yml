@@ -44,7 +44,9 @@ k3s:
       changes:
         paths:
           - 'ansible/dns.yml'
-      when: never       
+      when: never   
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never              
     - when: never          
 
 k3s-ansible:
@@ -70,6 +72,8 @@ k3s-ansible:
         paths:
           - 'ansible/dns.yml'
       when: never      
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never       
     - when: never    
 
 k3s-dns:
