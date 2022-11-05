@@ -35,8 +35,11 @@ k3s:
   extends: .terraform_apply   
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
-    - changes:
-        - 'terraform/*'
+      changes:
+        compare_to: refs/heads/main
+        paths:
+          - 'terraform/*'       
+      when: always
     - when: never          
 
 k3s-ansible:
