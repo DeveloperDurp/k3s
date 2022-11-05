@@ -117,14 +117,13 @@ k3s-destroy:
   allow_failure: false
   extends: .terraform_destroy  
   needs: ["k3s"]
-  when: manual  
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         paths:
           - 'terraform/*'     
           - 'ansible/*'  
-      when: always
+      when: manual
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         paths:
