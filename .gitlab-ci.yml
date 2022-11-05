@@ -16,14 +16,14 @@ format:
     WORKDIR: $CI_PROJECT_DIR/terraform
   allow_failure: false
   extends: .terraform_fmt
-  #rules: 
-  #  - if: $CI_PIPELINE_SOURCE == "merge_request_event"   
-  #    changes:
-  #      compare_to: refs/heads/main
-  #      paths:
-  #        - 'terraform/*'       
-  #    when: always
-  #  - when: never
+  rules: 
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"   
+      changes:
+        compare_to: refs/heads/main
+        paths:
+          - 'terraform/*'       
+      when: always
+    - when: never
 
 plan:
   stage: lint

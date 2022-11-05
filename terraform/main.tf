@@ -38,8 +38,8 @@ resource "proxmox_vm_qemu" "k3master" {
   #Cloud Init Settings
   ipconfig0    = "ip=192.168.20.${var.k3master.ip[count.index]}/24,gw=192.168.20.1"
   searchdomain = "durp.loc"
-  nameserver   = "${var.dnsserver}"
-  sshkeys      = "${var.sshkeys}"
+  nameserver   = var.dnsserver
+  sshkeys      = var.sshkeys
 }
 
 resource "proxmox_vm_qemu" "k3server" {
@@ -79,8 +79,8 @@ resource "proxmox_vm_qemu" "k3server" {
   #Cloud Init Settings
   ipconfig0    = "ip=192.168.20.${var.k3server.ip[count.index]}/24,gw=192.168.20.1"
   searchdomain = "durp.loc"
-  nameserver   = "${var.dnsserver}"
-  sshkeys      = "${var.sshkeys}"
+  nameserver   = var.dnsserver
+  sshkeys      = var.sshkeys
 }
 
 #kasm
@@ -123,6 +123,6 @@ resource "proxmox_vm_qemu" "kasm" {
   #Cloud Init Settings
   ipconfig0    = "ip=192.168.20.110/24,gw=192.168.20.1"
   searchdomain = "durp.loc"
-  nameserver   = "${var.dnsserver}"
-  sshkeys      = "${var.sshkeys}"
+  nameserver   = var.dnsserver
+  sshkeys      = var.sshkeys
 }
