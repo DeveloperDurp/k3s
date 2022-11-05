@@ -6,7 +6,10 @@ stages:
 include:
   - project: 'developerdurp/jobtemplates'
     ref: main
-    file: 'terraform.yml'
+    file: 
+      - 'terraform.yml'
+      - 'ansible.yml'
+    
     
 plan:
   stage: lint
@@ -32,39 +35,19 @@ apply:
     - changes:
         - 'terraform/*'
 
+k3s:
+  stage: build
+  variables:
+    FILE: $CI_PROJECT_DIR/jobs/main.yml
+    REQUIREMENTS: $CI_PROJECT_DIR/group_vars/requirements.yml
+  allow_failure: false
+  extends: .ansible_apply 
+  #rules:
+  #  - if: '$CI_COMMIT_BRANCH == "main"'
+  #  - changes:
+  #      - 'terraform/*'
 
-#apply:
-#  stage: apply
-#  image:
-#    name: hashicorp/terraform:light
-#    entrypoint:
-#      - '/usr/bin/env'
-#      - 'PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin'
-#  variables:
-#    PLAN: plan.tfplan
-#    JSON_PLAN_FILE: tfplan.json
-#    TF_IN_AUTOMATION: "true"
-#    GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${CI_PROJECT_NAME}
-#  cache:
-#    key: "$CI_COMMIT_SHA"
-#    paths:
-#      - .terraform
-#  script:    
-#    - apk add --update curl jq
-#    - alias convert_report="jq -r '([.resource_changes[].change.actions?]|flatten)|{\"create\":(map(select(.==\"create\"))|length),\"update\":(map(select(.==\"update\"))|length),\"delete\":(map(select(.==\"delete\"))|length)}'"
-#    - terraform --version
-#    - terraform init -reconfigure -backend-config="address=${GITLAB_TF_ADDRESS}" -backend-config="lock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="unlock_address=${GITLAB_TF_ADDRESS}/lock" -backend-config="username=gitlab-ci-token" -backend-config="password=${CI_JOB_TOKEN}" -backend-config="lock_method=POST" -backend-config="unlock_method=DELETE" -backend-config="retry_wait_min=5"      
-#    - terraform apply -auto-approve -var-file=terraform.tfvars
-#  after_script:
-#    - curl --request PUT --header "PRIVATE-TOKEN:${jobtoken}" "${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/variables/kubeconfig" --form "value=$(cat config)" > null
-#  dependencies:
-#    - plan 
-#  only:
-#    changes:
-#      - terraform.tf 
-#      - terraform.tfvars    
-#      - jobs/main.yml      
-#  when: manual      
+
 #
 #ansible-apply:
 #  stage: apply
