@@ -109,6 +109,32 @@ k3s-update:
       when: always 
     - when: never        
 
+k3s-destroy:
+  stage: destroy
+  variables:
+    WORKDIR: $CI_PROJECT_DIR/terraform
+    ARGUMENTS: -var=pm_password=$pm_password -var=pm_api_url=$pm_api_url -var-file=terraform.tfvars
+  allow_failure: false
+  extends: .terraform_destroy  
+  needs: ["k3s"]
+  when: manual  
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        paths:
+          - 'terraform/*'     
+          - 'ansible/*'  
+      when: always
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        paths:
+          - 'ansible/dns.yml'
+      when: never   
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never              
+    - when: never   
+
+
 
 #destroy:
 #  stage: destroy
