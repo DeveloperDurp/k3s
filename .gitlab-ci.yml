@@ -114,7 +114,6 @@ k3s-ansible:
 
 k3s-dns:
   stage: ansible
-  image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/ansible
     FILE: dns.yml
