@@ -12,7 +12,7 @@ include:
 
 format:
   stage: lint
-  image: docker.durp.info/hashicorp/terraform:light
+  #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/terraform
   allow_failure: false
@@ -28,7 +28,7 @@ format:
 
 validate:
   stage: lint
-  image: docker.durp.info/hashicorp/terraform:light
+  #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/terraform
   allow_failure: false
@@ -44,7 +44,7 @@ validate:
 
 plan:
   stage: lint
-  image: docker.durp.info/hashicorp/terraform:light
+  #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/terraform
     ARGUMENTS: -var=pm_password=$pm_password -var=pm_api_url=$pm_api_url -var-file=terraform.tfvars
@@ -62,7 +62,7 @@ plan:
 
 k3s:
   stage: build
-  image: docker.durp.info/hashicorp/terraform:light
+  #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/terraform
     ARGUMENTS: -var=pm_password=$pm_password -var=pm_api_url=$pm_api_url -var-file=terraform.tfvars
@@ -113,7 +113,7 @@ k3s-ansible:
 
 k3s-dns:
   stage: build
-  image: docker.durp.info/hashicorp/terraform:light
+  #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/ansible
     FILE: dns.yml
@@ -147,7 +147,7 @@ k3s-update:
 
 k3s-destroy:
   stage: destroy
-  image: docker.durp.info/hashicorp/terraform:light
+  #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/terraform
     ARGUMENTS: -var=pm_password=$pm_password -var=pm_api_url=$pm_api_url -var-file=terraform.tfvars
