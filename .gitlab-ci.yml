@@ -1,6 +1,7 @@
 stages:
   - lint
-  - build
+  - terraform
+  - ansible
   - destroy
 
 include:
@@ -61,7 +62,7 @@ plan:
     - when: never
 
 k3s:
-  stage: build
+  stage: terraform
   #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/terraform
@@ -85,7 +86,7 @@ k3s:
     - when: never          
 
 k3s-ansible:
-  stage: build
+  stage: ansible
   variables:
     WORKDIR: $CI_PROJECT_DIR/ansible
     FILE: main.yml
@@ -112,7 +113,7 @@ k3s-ansible:
     - when: never    
 
 k3s-dns:
-  stage: build
+  stage: terraform
   #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/ansible
@@ -131,7 +132,7 @@ k3s-dns:
     - when: never    
 
 k3s-update:
-  stage: build
+  stage: terraform
   variables:
     WORKDIR: $CI_PROJECT_DIR/ansible
     FILE: update.yml
