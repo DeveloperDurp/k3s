@@ -113,7 +113,7 @@ k3s-ansible:
     - when: never    
 
 k3s-dns:
-  stage: terraform
+  stage: ansible
   #image: docker.durp.info/hashicorp/terraform:light
   variables:
     WORKDIR: $CI_PROJECT_DIR/ansible
@@ -132,7 +132,7 @@ k3s-dns:
     - when: never    
 
 k3s-update:
-  stage: terraform
+  stage: ansible
   variables:
     WORKDIR: $CI_PROJECT_DIR/ansible
     FILE: update.yml
