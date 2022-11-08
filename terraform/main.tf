@@ -82,4 +82,3 @@ resource "proxmox_vm_qemu" "k3server" {
   nameserver   = var.dnsserver
   sshkeys      = var.sshkeys
 }
-
