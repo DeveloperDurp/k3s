@@ -18,11 +18,7 @@ format:
   allow_failure: false
   extends: .terraform_fmt
   rules: 
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"   
-      changes:
-        compare_to: refs/heads/main
-        paths:
-          - 'terraform/*'       
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"         
       when: always
     - when: never
 
@@ -33,11 +29,7 @@ validate:
   allow_failure: false
   extends: .terraform_validate
   rules: 
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"   
-      changes:
-        compare_to: refs/heads/main
-        paths:
-          - 'terraform/*'       
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"         
       when: always
     - when: never    
 
