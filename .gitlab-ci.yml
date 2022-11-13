@@ -37,6 +37,7 @@ ansible:
   stage: lint
   variables:
     WORKDIR: $CI_PROJECT_DIR/ansible
+    REQUIREMENTS: requirements.yml
   allow_failure: false
   extends: .ansible_lint
   rules: 
