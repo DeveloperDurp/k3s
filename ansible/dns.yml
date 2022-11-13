@@ -14,3 +14,4 @@
       - {record: 'kasm', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'nexus', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'docker', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'authentik', zone: 'durp.info', proxied: 'yes', state: 'present'}
