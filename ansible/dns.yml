@@ -2,9 +2,9 @@
   roles:
     - cloudflare
   vars:
-    DNS:
+    dns:
       - {record: 'bitwarden', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'nextcloud', zone: 'durp.info', proxied: 'yes', state: 'present'} 
+      - {record: 'nextcloud', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'grafana', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'kong', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: '@', zone: 'durp.info', proxied: 'yes', state: 'present'}
@@ -16,5 +16,4 @@
       - {record: 'docker', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'authentik', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'plex', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'vault', zone: 'durp.info', proxied: 'yes', state: 'present'}      
-
+      - {record: 'vault', zone: 'durp.info', proxied: 'yes', state: 'present'}

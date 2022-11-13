@@ -6,7 +6,7 @@ stages:
 
 include:
   - project: 'developerdurp/jobtemplates'
-    ref: release/1.0.0
+    ref: main
     file: 
       - 'terraform.yml'
       - 'ansible.yml'
@@ -32,6 +32,19 @@ validate:
     - if: $CI_PIPELINE_SOURCE == "merge_request_event"         
       when: always
     - when: never    
+    
+ansible:
+  stage: lint
+  variables:
+    WORKDIR: $CI_PROJECT_DIR/ansible
+    REQUIREMENTS: requirements.yml
+    FILE: main.yml
+  allow_failure: false
+  extends: .ansible_lint
+  rules: 
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"         
+      when: always
+    - when: never
 
 plan:
   stage: lint
@@ -156,3 +169,4 @@ k3s-destroy:
           - 'ansible/*'  
       when: always           
     - when: never   
+

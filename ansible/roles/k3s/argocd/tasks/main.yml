@@ -1,29 +1,29 @@
----
-- name: copy configs
-  copy: 
+- name: Copy configs
+  ansible.builtin.copy:
     src: ./roles/k3s/argocd/templates/
     dest: /opt/argocd
-    owner: administrator 
-    group: administrator 
+    owner: administrator
+    group: administrator
     mode: "0664"
-    force: yes 
+    force: true
 
-- name: copy configs
-  copy: 
-    src: "{{ lookup('env','kubeseal') }}"
+- name: Copy configs
+  ansible.builtin.copy:
+    src: "{{ lookup('env', 'kubeseal') }}"
     dest: /opt/kubeseal.yaml
-    owner: administrator 
-    group: administrator 
+    owner: administrator
+    group: administrator
     mode: "0600"
-    force: yes 
+    force: true
 
 - name: Apply Kubeseal master key
-  command: k3s kubectl apply -f /opt/kubeseal.yaml --force
+  ansible.builtin.command: k3s kubectl apply -f /opt/kubeseal.yaml --force
+  changed_when: my_output.rc != 0
 
 - name: Apply ArgoCD
-  command: k3s kubectl apply -f /opt/argocd/argocd.yaml -n argocd
+  ansible.builtin.command: k3s kubectl apply -f /opt/argocd/argocd.yaml -n argocd
+  changed_when: my_output.rc != 0
 
 - name: Apply ArgoCD Apps
-  command: k3s kubectl apply -f /opt/argocd/apps.yaml -n argocd
-
-  
+  ansible.builtin.command: k3s kubectl apply -f /opt/argocd/apps.yaml -n argocd
+  changed_when: my_output.rc != 0
