@@ -167,3 +167,4 @@ k3s-destroy:
           - 'ansible/*'  
       when: always           
     - when: never   
+
