@@ -15,3 +15,5 @@
       - {record: 'nexus', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'docker', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'authentik', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'plex', zone: 'durp.info', proxied: 'yes', state: 'present'}
+      - {record: 'vault', zone: 'durp.info', proxied: 'yes', state: 'present'}      
