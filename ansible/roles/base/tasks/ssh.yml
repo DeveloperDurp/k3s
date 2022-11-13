@@ -1,47 +1,50 @@
 - name: Deploy SSH Key (administrator)
-  copy:
+  ansible.builtin.copy:
     dest: /home/administrator/.ssh/authorized_keys
     src: files/authorized_keys_administrator
-    force: true 
+    mode: "0600"
+    force: true
 
-- name: ensure ssh folder exists for user
-  file: 
+- name: Ensure ssh folder exists for user
+  ansible.builtin.file:
     path: /home/user/.ssh
+    mode: "0600"
     state: directory
 
 - name: Deploy SSH Key (user)
-  copy:
+  ansible.builtin.copy:
     dest: /home/user/.ssh/authorized_keys
     src: files/authorized_keys_user
-    force: true 
+    mode: "0600"
+    force: true
 
 - name: Remove Root SSH Configuration
-  file: 
+  ansible.builtin.file:
     path: /root/.ssh
     state: absent
 
 - name: Copy Secured SSHD Configuration
-  copy: 
-    src: files/sshd_config_secured 
-    dest: /etc/ssh/sshd_config 
-    owner: root 
-    group: root 
+  ansible.builtin.copy:
+    src: files/sshd_config_secured
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
     mode: "0644"
-  when: ansible_os_family == "Debian"   
+  when: ansible_os_family == "Debian"
 
 - name: Copy Secured SSHD Configuration
-  copy: 
-    src: files/sshd_config_secured_redhat 
-    dest: /etc/ssh/sshd_config 
-    owner: root 
-    group: root 
-    mode: "0644"    
-  when: ansible_os_family == "RedHat"   
+  ansible.builtin.copy:
+    src: files/sshd_config_secured_redhat
+    dest: /etc/ssh/sshd_config
+    owner: root
+    group: root
+    mode: "0644"
+  when: ansible_os_family == "RedHat"
 
 - name: Restart SSHD
-  systemd:
+  ansible.builtin.systemd:
     name: sshd
-    daemon_reload: yes
+    daemon_reload: true
     state: restarted
-    enabled: yes
-  ignore_errors: yes
+    enabled: true
+  ignore_errors: "{{ ansible_check_mode }}"

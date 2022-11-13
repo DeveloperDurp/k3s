@@ -1,58 +1,57 @@
----
 - name: Run Package tasks
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: ./templates/packages.yml
 
 - name: Create user account
-  user: 
+  ansible.builtin.user:
     name: "{{ username }}"
     password: "{{ userpassword }}"
     groups: sudo
     shell: /bin/bash
     state: present
-    createhome: yes
-  when: ansible_os_family == "Debian"   
+    createhome: true
+  when: ansible_os_family == "Debian"
 
 - name: Create user account
-  user: 
+  ansible.builtin.user:
     name: "{{ username }}"
     password: "{{ userpassword }}"
     shell: /bin/bash
     groups: wheel
     state: present
-    createhome: yes
-  when: ansible_os_family == "RedHat"   
-    
+    createhome: true
+  when: ansible_os_family == "RedHat"
+
 - name: Run SSH tasks
-  include_tasks:
+  ansible.builtin.include_tasks:
     file: ssh.yml
 
 - name: Copy unattended-upgrades file
-  copy: 
+  ansible.builtin.copy:
     src: files/10periodic
-    dest: /etc/apt/apt.conf.d/10periodic 
-    owner: root 
-    group: root 
+    dest: /etc/apt/apt.conf.d/10periodic
+    owner: root
+    group: root
     mode: "0644"
-    force: yes
-  when: ansible_os_family == "Debian"      
+    force: true
+  when: ansible_os_family == "Debian"
 
 - name: Remove undesirable packages
-  package:
+  ansible.builtin.package:
     name: "{{ unnecessary_software }}"
     state: absent
-  when: ansible_os_family == "Debian"    
+  when: ansible_os_family == "Debian"
 
 - name: Stop and disable unnecessary services
-  service:
+  ansible.builtin.service:
     name: "{{ item }}"
     state: stopped
-    enabled: no
+    enabled: false
   with_items: "{{ unnecessary_services }}"
-  ignore_errors: yes
+  ignore_errors: "{{ ansible_check_mode }}"
 
 - name: Set a message of the day
-  copy:
+  ansible.builtin.copy:
     dest: /etc/motd
     src: files/motd
     owner: root
@@ -60,7 +59,7 @@
     mode: 0644
 
 - name: Set a login banner
-  copy:
+  ansible.builtin.copy:
     dest: "{{ item }}"
     src: files/issue
     owner: root
@@ -70,13 +69,14 @@
     - /etc/issue
     - /etc/issue.net
 
-- name: set timezone
-  shell: timedatectl set-timezone America/Chicago
+- name: Set timezone
+  ansible.builtin.command: timedatectl set-timezone America/Chicago
+  changed_when: my_output.rc != 0
 
 - name: Enable cockpit
-  systemd:
+  ansible.builtin.systemd:
     name: cockpit
-    daemon_reload: yes
+    daemon_reload: true
     state: restarted
-    enabled: yes
-  when: ansible_os_family == "RedHat"    
+    enabled: true
+  when: ansible_os_family == "RedHat"
