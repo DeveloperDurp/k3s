@@ -142,17 +142,17 @@ k3s-destroy:
   extends: .terraform_destroy  
   needs: ["k3s"]
   rules:
-    - if: '$CI_COMMIT_BRANCH == "main"'
-      changes:
-        paths:
-          - 'terraform/*'     
-          - 'ansible/*'  
-      when: manual
+    - if: $CI_PIPELINE_SOURCE == "schedule"
+      when: never      
     - if: '$CI_COMMIT_BRANCH == "main"'
       changes:
         paths:
           - 'ansible/dns.yml'
       when: never   
-    - if: $CI_PIPELINE_SOURCE == "schedule"
-      when: never              
+    - if: '$CI_COMMIT_BRANCH == "main"'
+      changes:
+        paths:
+          - 'terraform/*'     
+          - 'ansible/*'  
+      when: always           
     - when: never   
