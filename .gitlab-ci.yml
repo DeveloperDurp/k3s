@@ -6,7 +6,7 @@ stages:
 
 include:
   - project: 'developerdurp/jobtemplates'
-    ref: release/1.1.0
+    ref: main
     file: 
       - 'terraform.yml'
       - 'ansible.yml'
