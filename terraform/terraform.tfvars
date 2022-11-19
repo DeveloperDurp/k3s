@@ -6,11 +6,11 @@ k3master = {
   count    = 3
   name     = ["master01", "master02", "master03"]
   cores    = 2
-  memory   = "4096"
+  memory   = "2048"
   drive    = "20G"
-  storage  = "domains"
+  storage  = "NVMeSSD"
   template = "CentOS9-Template"
-  node     = "mothership"
+  node     = "overlord"
   ip       = ["121", "122", "123"]
 }
 
@@ -19,9 +19,9 @@ k3server = {
   name     = ["node01", "node02", "node03"]
   cores    = 4
   memory   = "8192"
-  drive    = "145G"
+  drive    = "20G"
   storage  = "NVMeSSD"
   template = "CentOS9-Template"
-  node     = "mothership"
+  node     = "overlord"
   ip       = ["124", "125", "126"]
 }
