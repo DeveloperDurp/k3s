@@ -23,7 +23,7 @@ resource "proxmox_vm_qemu" "k3master" {
     size    = var.k3master.drive
     type    = "scsi"
     storage = var.k3master.storage
-    ssd     = 0
+    ssd     = 1
     backup  = 0
   }
   network {
