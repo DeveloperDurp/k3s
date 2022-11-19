@@ -47,4 +47,4 @@
     daemon_reload: true
     state: restarted
     enabled: true
-  ignore_errors: "{{ ansible_check_mode }}"
+  ignore_errors: true
