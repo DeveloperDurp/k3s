@@ -33,19 +33,19 @@ validate:
       when: always
     - when: never    
     
-ansible:
-  stage: lint
-  variables:
-    WORKDIR: $CI_PROJECT_DIR/ansible
-    REQUIREMENTS: requirements.yml
-    FILE: main.yml
-  allow_failure: false
-  extends: .ansible_lint
-  rules: 
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"         
-      when: always
-    - when: never
-
+#ansible:
+#  stage: lint
+#  variables:
+#    WORKDIR: $CI_PROJECT_DIR/ansible
+#    REQUIREMENTS: requirements.yml
+#    FILE: main.yml
+#  allow_failure: false
+#  extends: .ansible_lint
+#  rules: 
+#    - if: $CI_PIPELINE_SOURCE == "merge_request_event"         
+#      when: always
+#    - when: never
+#
 plan:
   stage: lint
   variables:
