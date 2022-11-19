@@ -55,11 +55,7 @@ plan:
   extends: .terraform_plan
   needs: ["validate","format"]
   rules: 
-    - if: $CI_PIPELINE_SOURCE == "merge_request_event"   
-      changes:
-        compare_to: refs/heads/main
-        paths:
-          - 'terraform/*'       
+    - if: $CI_PIPELINE_SOURCE == "merge_request_event"    
       when: always
     - when: never
 
@@ -74,10 +70,6 @@ k3s:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: never      
     - if: '$CI_COMMIT_BRANCH == "main"'
-      changes:
-        paths:
-          - 'terraform/*'     
-          - 'ansible/*'  
       when: always
     - when: never          
 
@@ -96,10 +88,6 @@ k3s-ansible:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: never      
     - if: '$CI_COMMIT_BRANCH == "main"'
-      changes:
-        paths:
-          - 'terraform/*'     
-          - 'ansible/*'  
       when: always    
     - when: never    
 
@@ -130,10 +118,6 @@ k3s-destroy:
     - if: $CI_PIPELINE_SOURCE == "schedule"
       when: never      
     - if: '$CI_COMMIT_BRANCH == "main"'
-      changes:
-        paths:
-          - 'terraform/*'     
-          - 'ansible/*'  
       when: manual           
     - when: never   
 
