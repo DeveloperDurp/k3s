@@ -6,6 +6,6 @@
     state: "{{ item.state }}"
     type: A
     proxied: "{{ item.proxied }}"
-    value: "{{ lookup('env', 'external_ip') }}"
-    api_token: "{{ lookup('env', 'cloudflareapi') }}"
-  with_items: "{{ dns }}"
+    value: "{{ lookup('env','external_ip') }}"
+    api_token: "{{ lookup('env','cloudflareapi') }}"
+  with_items: "{{ DNS }}"     

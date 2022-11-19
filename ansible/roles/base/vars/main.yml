@@ -10,14 +10,16 @@ required_packages:
 
 redhat_required_packages:
     - qemu-guest-agent
-    - cockpit
-    - iscsi-initiator-utils
+    - cockpit     
+    - iscsi-initiator-utils 
 
 unnecessary_services:
     - postfix
     - telnet
-
+    
 unnecessary_software:
     - tcpdump
     - nmap-ncat
-    - wpa_supplicant
+    - wpa_supplicant    
+
+    
