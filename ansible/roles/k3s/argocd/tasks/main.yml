@@ -18,12 +18,10 @@
 
 - name: Apply Kubeseal master key
   ansible.builtin.command: k3s kubectl apply -f /opt/kubeseal.yaml --force
-  changed_when: my_output.rc != 0
 
 - name: Apply ArgoCD
   ansible.builtin.command: k3s kubectl apply -f /opt/argocd/argocd.yaml -n argocd
-  changed_when: my_output.rc != 0
 
 - name: Apply ArgoCD Apps
   ansible.builtin.command: k3s kubectl apply -f /opt/argocd/apps.yaml -n argocd
-  changed_when: my_output.rc != 0
+  

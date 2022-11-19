@@ -71,7 +71,6 @@
 
 - name: Set timezone
   ansible.builtin.command: timedatectl set-timezone America/Chicago
-  changed_when: my_output.rc != 0
 
 - name: Enable cockpit
   ansible.builtin.systemd:
