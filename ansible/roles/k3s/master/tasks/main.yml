@@ -154,7 +154,7 @@
     - "{{ username }}"
   vars:
     endpoint_url: >-
-      https://{{ "apiserver_endpoint | ansible.utils.ipwrap" }}:6443
+      https://{{ apiserver_endpoint | ansible.utils.ipwrap }}:6443
 
 - name: Create kubectl symlink
   ansible.builtin.file:
