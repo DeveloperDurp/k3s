@@ -167,6 +167,6 @@ k3s-destroy:
         paths:
           - 'terraform/*'     
           - 'ansible/*'  
-      when: always           
+      when: manual           
     - when: never   
 
