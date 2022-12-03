@@ -33,7 +33,7 @@ k3server2 = {
   memory   = "8192"
   drive    = "80G"
   storage  = "NVMeSSD"
-  template = "CentOS9-Template"
+  template = "CentOS9-Template2"
   node     = "mothership"
   ip       = ["127", "128", "129"]
 }
