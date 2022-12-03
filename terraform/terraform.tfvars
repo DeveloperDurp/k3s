@@ -19,9 +19,21 @@ k3server = {
   name     = ["node01", "node02", "node03"]
   cores    = 4
   memory   = "8192"
-  drive    = "20G"
+  drive    = "80G"
   storage  = "NVMeSSD"
   template = "CentOS9-Template"
   node     = "overlord"
   ip       = ["124", "125", "126"]
+}
+
+k3server2 = {
+  count    = 3
+  name     = ["node04", "node05", "node06"]
+  cores    = 4
+  memory   = "8192"
+  drive    = "80G"
+  storage  = "NVMeSSD"
+  template = "CentOS9-Template"
+  node     = "mothership"
+  ip       = ["127", "128", "129"]
 }

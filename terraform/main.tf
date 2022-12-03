@@ -82,3 +82,44 @@ resource "proxmox_vm_qemu" "k3server" {
   nameserver   = var.dnsserver
   sshkeys      = var.sshkeys
 }
+
+resource "proxmox_vm_qemu" "k3server2" {
+  count       = var.k3server2.count
+  ciuser      = "administrator"
+  vmid        = "20${var.k3server2.ip[count.index]}"
+  name        = var.k3server2.name[count.index]
+  target_node = var.k3server2.node
+  clone       = var.k3server2.template
+  full_clone  = true
+  os_type     = "cloud-init"
+  agent       = 1
+  cores       = var.k3server2.cores
+  sockets     = 1
+  cpu         = "host"
+  memory      = var.k3server2.memory
+  scsihw      = "virtio-scsi-pci"
+  bootdisk    = "scsi0"
+  boot        = "c"
+  onboot      = true
+  disk {
+    size    = var.k3server2.drive
+    type    = "scsi"
+    storage = var.k3server2.storage
+    ssd     = 1
+    backup  = 0
+  }
+  network {
+    model  = "virtio"
+    bridge = "vmbr1"
+  }
+  lifecycle {
+    ignore_changes = [
+      network,
+    ]
+  }
+  #Cloud Init Settings
+  ipconfig0    = "ip=192.168.20.${var.k3server2.ip[count.index]}/24,gw=192.168.20.1"
+  searchdomain = "durp.loc"
+  nameserver   = var.dnsserver
+  sshkeys      = var.sshkeys
+}
