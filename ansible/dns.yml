@@ -10,7 +10,6 @@
       - {record: '@', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'whoogle', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'kuma', zone: 'durp.info', proxied: 'yes', state: 'present'}
-      - {record: 'oauth', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'kasm', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'nexus', zone: 'durp.info', proxied: 'yes', state: 'present'}
       - {record: 'docker', zone: 'durp.info', proxied: 'yes', state: 'present'}
