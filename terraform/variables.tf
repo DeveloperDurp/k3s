@@ -31,7 +31,7 @@ variable "k3master" {
     name     = list(string)
     cores    = number
     memory   = number
-    drive    = list(string)
+    drive    = string
     storage  = string
     template = list(string)
     node     = list(string)

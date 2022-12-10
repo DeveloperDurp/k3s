@@ -20,7 +20,7 @@ resource "proxmox_vm_qemu" "k3master" {
   boot        = "c"
   onboot      = true
   disk {
-    size    = var.k3master.drive[count.index]
+    size    = var.k3master.drive
     type    = "scsi"
     storage = var.k3master.storage
     ssd     = 1
