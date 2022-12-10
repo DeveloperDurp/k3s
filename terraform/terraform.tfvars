@@ -9,7 +9,7 @@ k3master = {
   memory   = "2048"
   drive    = "20G"
   storage  = "NVMeSSD"
-  template = "CentOS9-Template"
+  template = ["CentOS9-Template","CentOS9-Template","CentOS9-Template","CentOS9-Template2","CentOS9-Template2","CentOS9-Template2"]
   node     = ["overlord","overlord","overlord","mothership","mothership","mothership"]
   ip       = ["121", "122", "123","124", "125", "126"]
 }
