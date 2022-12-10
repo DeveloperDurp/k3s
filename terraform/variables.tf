@@ -31,10 +31,10 @@ variable "k3master" {
     name     = list(string)
     cores    = number
     memory   = number
-    drive    = string
+    drive    = list(string)
     storage  = string
-    template = string
-    node     = string
+    template = list(string)
+    node     = list(string)
     ip       = list(number)
   })
 }
@@ -46,26 +46,10 @@ variable "k3server" {
     name     = list(string)
     cores    = number
     memory   = number
-    drive    = string
+    drive    = list(string)
     storage  = string
-    template = string
-    node     = string
-    ip       = list(number)
-  })
-}
-
-
-variable "k3server2" {
-  description = "Defaults of worker nodes in K3S"
-  type = object({
-    count    = number
-    name     = list(string)
-    cores    = number
-    memory   = number
-    drive    = string
-    storage  = string
-    template = string
-    node     = string
+    template = list(string)
+    node     = list(string)
     ip       = list(number)
   })
 }

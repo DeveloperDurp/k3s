@@ -6,8 +6,8 @@ resource "proxmox_vm_qemu" "k3master" {
   ciuser      = "administrator"
   vmid        = "20${var.k3master.ip[count.index]}"
   name        = var.k3master.name[count.index]
-  target_node = var.k3master.node
-  clone       = var.k3master.template
+  target_node = var.k3master.node[count.index]
+  clone       = var.k3master.template[count.index]
   full_clone  = true
   os_type     = "cloud-init"
   agent       = 1
@@ -20,7 +20,7 @@ resource "proxmox_vm_qemu" "k3master" {
   boot        = "c"
   onboot      = true
   disk {
-    size    = var.k3master.drive
+    size    = var.k3master.drive[count.index]
     type    = "scsi"
     storage = var.k3master.storage
     ssd     = 1
@@ -47,8 +47,8 @@ resource "proxmox_vm_qemu" "k3server" {
   ciuser      = "administrator"
   vmid        = "20${var.k3server.ip[count.index]}"
   name        = var.k3server.name[count.index]
-  target_node = var.k3server.node
-  clone       = var.k3server.template
+  target_node = var.k3server.node[count.index]
+  clone       = var.k3server.template[count.index]
   full_clone  = true
   os_type     = "cloud-init"
   agent       = 1
@@ -61,7 +61,7 @@ resource "proxmox_vm_qemu" "k3server" {
   boot        = "c"
   onboot      = true
   disk {
-    size    = var.k3server.drive
+    size    = var.k3server.drive[count.index]
     type    = "scsi"
     storage = var.k3server.storage
     ssd     = 1
@@ -78,47 +78,6 @@ resource "proxmox_vm_qemu" "k3server" {
   }
   #Cloud Init Settings
   ipconfig0    = "ip=192.168.20.${var.k3server.ip[count.index]}/24,gw=192.168.20.1"
-  searchdomain = "durp.loc"
-  nameserver   = var.dnsserver
-  sshkeys      = var.sshkeys
-}
-
-resource "proxmox_vm_qemu" "k3server2" {
-  count       = var.k3server2.count
-  ciuser      = "administrator"
-  vmid        = "20${var.k3server2.ip[count.index]}"
-  name        = var.k3server2.name[count.index]
-  target_node = var.k3server2.node
-  clone       = var.k3server2.template
-  full_clone  = true
-  os_type     = "cloud-init"
-  agent       = 1
-  cores       = var.k3server2.cores
-  sockets     = 1
-  cpu         = "host"
-  memory      = var.k3server2.memory
-  scsihw      = "virtio-scsi-pci"
-  bootdisk    = "scsi0"
-  boot        = "c"
-  onboot      = true
-  disk {
-    size    = var.k3server2.drive
-    type    = "scsi"
-    storage = var.k3server2.storage
-    ssd     = 1
-    backup  = 0
-  }
-  network {
-    model  = "virtio"
-    bridge = "vmbr1"
-  }
-  lifecycle {
-    ignore_changes = [
-      network,
-    ]
-  }
-  #Cloud Init Settings
-  ipconfig0    = "ip=192.168.20.${var.k3server2.ip[count.index]}/24,gw=192.168.20.1"
   searchdomain = "durp.loc"
   nameserver   = var.dnsserver
   sshkeys      = var.sshkeys
