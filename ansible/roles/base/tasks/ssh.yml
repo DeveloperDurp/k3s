@@ -7,12 +7,18 @@
 - name: ensure ssh folder exists for user
   file: 
     path: /home/user/.ssh
+    owner: user 
+    group: user 
+    mode: "0600"
     state: directory
 
 - name: Deploy SSH Key (user)
   copy:
     dest: /home/user/.ssh/authorized_keys
     src: files/authorized_keys_user
+    owner: user 
+    group: user 
+    mode: "0600"
     force: true 
 
 - name: Remove Root SSH Configuration
