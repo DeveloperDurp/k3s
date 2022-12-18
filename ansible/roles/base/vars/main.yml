@@ -7,12 +7,12 @@ required_packages:
     - cockpit
     - nfs-common
     - open-iscsi
-    - powershell
 
 redhat_required_packages:
     - qemu-guest-agent
     - cockpit     
     - iscsi-initiator-utils 
+    - powershell
 
 unnecessary_services:
     - postfix
