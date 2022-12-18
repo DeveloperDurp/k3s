@@ -7,6 +7,7 @@ required_packages:
     - cockpit
     - nfs-common
     - open-iscsi
+    - powershell
 
 redhat_required_packages:
     - qemu-guest-agent
@@ -22,4 +23,5 @@ unnecessary_software:
     - nmap-ncat
     - wpa_supplicant    
 
-    
+redhat_required_repositories:
+    - {baseurl: 'https://nexus.durp.info/repository/Microsoft/', name: 'Microsoft', gpgkey: 'https://nexus.durp.info/repository/keys/yum/nexus.asc'}    

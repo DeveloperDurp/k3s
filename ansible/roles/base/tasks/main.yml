@@ -1,4 +1,14 @@
 ---
+- name: add repositories
+  ansible.builtin.yum_repository:
+    name: "{{ item.name }}"
+    description: "Ansible repositories"
+    baseurl: "{{ item.baseurl }}"
+    async: yes
+    gpgkey: "{{ item.gpgkey }}"
+  with_items:  "{{ redhat_required_repositories }}"  
+  when: ansible_os_family == "RedHat"  
+
 - name: Run Package tasks
   include_tasks:
     file: ./templates/packages.yml
