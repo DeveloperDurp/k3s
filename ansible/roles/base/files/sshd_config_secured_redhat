@@ -128,7 +128,7 @@ Subsystem sftp	/usr/libexec/openssh/sftp-server
 #	AllowTcpForwarding no
 #	PermitTTY no
 #	ForceCommand cvs server
-PasswordAuthentication no
+PasswordAuthentication yes
 
 #enable remote powershell
 #Subsystem powershell /usr/bin/pwsh -sshs -NoLogo
