@@ -24,4 +24,4 @@ unnecessary_software:
     - wpa_supplicant    
 
 redhat_required_repositories:
-    - {baseurl: 'https://nexus.durp.info/repository/Microsoft/', name: 'Microsoft', gpgkey: 'https://nexus.durp.info/repository/keys/yum/nexus.asc'}    
+    - {baseurl: 'https://packages.microsoft.com/rhel/8/prod/', name: 'Microsoft', gpgkey: 'https://packages.microsoft.com/keys/microsoft.asc'}    
