@@ -1,19 +1,20 @@
-export URL="https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20220425.0.x86_64.qcow2"
+export URL="https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20221219.0.x86_64.qcow2"
 export NAME="centos9.qcow2"
-export VM="CentOS9-Template"
-export VMID="99999"
-export LOCATION="domains"
+export VM="CentOS9-Template2"
+export VMID="999990"
+export LOCATION="NVMeSSD"
 
 echo Downloading Image
 wget $URL -O $NAME
 
 echo adding qemu agent
-virt-customize -a $NAME --install qemu-guest-agent
+virt-customize -a $NAME --install qemu-guest-agent,epel-release
+virt-customize -a $NAME --install ansible
 
 echo setting up VM
 qm create $VMID --name $VM --memory 1024 --cores 1 -cpu host --net0 virtio,bridge=vmbr1
 qm importdisk $VMID $NAME $LOCATION
-qm set $VMID --scsihw virtio-scsi-pci --scsi0 $LOCATION:vm-$VMID-disk-0
+qm set $VMID --scsihw virtio-scsi-pci --scsi0 $LOCATION:vm-$VMID-disk-0,size=10G
 qm set $VMID --boot c --bootdisk scsi0 
 qm set $VMID --ide2 $LOCATION:cloudinit 
 qm set $VMID --serial0 socket --vga serial0
@@ -27,7 +28,3 @@ qm template $ID
 
 echo Deleting image
 rm $NAME
-
-
-
-
