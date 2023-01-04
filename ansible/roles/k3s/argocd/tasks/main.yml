@@ -1,29 +1,14 @@
 ---
-- name: copy configs
-  copy: 
-    src: ./roles/k3s/argocd/templates/
-    dest: /opt/argocd
-    owner: administrator 
-    group: administrator 
-    mode: "0664"
-    force: yes 
-
-- name: copy configs
-  copy: 
-    src: "{{ lookup('env','kubeseal') }}"
-    dest: /opt/kubeseal.yaml
-    owner: administrator 
-    group: administrator 
-    mode: "0600"
-    force: yes 
-
 - name: Apply Kubeseal master key
   command: k3s kubectl apply -f /opt/kubeseal.yaml --force
 
-- name: Apply ArgoCD
-  command: k3s kubectl apply -f /opt/argocd/argocd.yaml -n argocd
+- name: Apply ArgoCD namespace
+  command: k3s kubectl apply -f https://raw.githubusercontent.com/DeveloperDurp/homelab/main/argocd/namespace.yaml -n argocd
+
+- name: Apply ArgoCD deployment
+  command: k3s kubectl apply -f https://raw.githubusercontent.com/DeveloperDurp/homelab/main/argocd/deployment.yaml -n argocd  
 
 - name: Apply ArgoCD Apps
-  command: k3s kubectl apply -f /opt/argocd/apps.yaml -n argocd
+  command: k3s kubectl apply -f https://raw.githubusercontent.com/DeveloperDurp/homelab/main/argocd/apps.yaml -n argocd  
 
   
