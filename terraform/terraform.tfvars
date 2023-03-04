@@ -13,15 +13,15 @@ k3master = {
   node     = ["overlord"]
   ip       = ["121"]
 }
-#
-#k3server = {
-#  count    = 4
-#  name     = ["node01", "node02","node03","node04"]
-#  cores    = 4
-#  memory   = "8192"
-#  drive    = ["60G","60G","60G","60G"]
-#  storage  = "NVMeSSD"
-#  template = ["CentOS9-Template","CentOS9-Template","CentOS9-Template","CentOS9-Template"]
-#  node     = ["overlord","overlord","overlord","overlord"]
-#  ip       = ["141", "142", "143", "144"]
-#}
+
+k3server = {
+  count    = 4
+  name     = ["node01", "node02","node03","node04"]
+  cores    = 4
+  memory   = "8192"
+  drive    = ["60G","60G","60G","60G"]
+  storage  = "NVMeSSD"
+  template = ["CentOS9-Template","CentOS9-Template","CentOS9-Template","CentOS9-Template"]
+  node     = ["overlord","overlord","overlord","overlord"]
+  ip       = ["141", "142", "143", "144"]
+}
