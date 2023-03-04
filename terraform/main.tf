@@ -24,7 +24,7 @@ resource "proxmox_vm_qemu" "k3master" {
     type    = "scsi"
     storage = var.k3master.storage
     ssd     = 1
-    backup  = 0
+    backup  = false
   }
   network {
     model  = "virtio"
@@ -65,7 +65,7 @@ resource "proxmox_vm_qemu" "k3master" {
 #    type    = "scsi"
 #    storage = var.k3server.storage
 #    ssd     = 1
-#    backup  = 0
+#    backup  = false
 #  }
 #  network {
 #    model  = "virtio"
