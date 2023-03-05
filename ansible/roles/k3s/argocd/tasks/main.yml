@@ -1,6 +1,12 @@
 ---
+- name: Copy file kubeseal
+  ansible.builtin.copy:
+    src: $CI_PROJECT_DIR/kubeseal.yaml
+    dest: /tmp/kubeseal.yaml
+    mode: '0666'
+
 - name: Apply Kubeseal master key
-  command: k3s kubectl apply -f ./kubeseal.yaml --force
+  command: k3s kubectl apply -f /tmp/kubeseal.yaml --force
 
 - name: Apply ArgoCD namespace
   command: k3s kubectl apply -f https://raw.githubusercontent.com/DeveloperDurp/homelab/main/argocd/namespace.yaml -n argocd
