@@ -1,7 +1,7 @@
 ---
 - name: Copy file kubeseal
   ansible.builtin.copy:
-    src: $CI_PROJECT_DIR/kubeseal.yaml
+    src: ./kubeseal.yaml
     dest: /tmp/kubeseal.yaml
     mode: '0666'
 
