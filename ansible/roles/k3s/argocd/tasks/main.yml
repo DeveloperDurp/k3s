@@ -1,6 +1,6 @@
 ---
 - name: Apply Kubeseal master key
-  command: k3s kubectl apply -f kubeseal.yaml --force
+  command: k3s kubectl apply -f ./kubeseal.yaml --force
 
 - name: Apply ArgoCD namespace
   command: k3s kubectl apply -f https://raw.githubusercontent.com/DeveloperDurp/homelab/main/argocd/namespace.yaml -n argocd
