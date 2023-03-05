@@ -8,6 +8,7 @@ resource "proxmox_vm_qemu" "k3master" {
   name        = var.k3master.name[count.index]
   target_node = var.k3master.node[count.index]
   clone       = var.k3master.template[count.index]
+  qemu_os     = "other"
   full_clone  = true
   os_type     = "cloud-init"
   agent       = 1
@@ -49,6 +50,7 @@ resource "proxmox_vm_qemu" "k3server" {
   name        = var.k3server.name[count.index]
   target_node = var.k3server.node[count.index]
   clone       = var.k3server.template[count.index]
+    qemu_os     = "other"
   full_clone  = true
   os_type     = "cloud-init"
   agent       = 1
