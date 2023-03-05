@@ -1,6 +1,6 @@
 export URL="https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20221219.0.x86_64.qcow2"
 export NAME="centos9.qcow2"
-export VM="CentOS9-Template2"
+export VM="CentOS9-Template"
 export VMID="999990"
 export LOCATION="NVMeSSD"
 

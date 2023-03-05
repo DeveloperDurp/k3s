@@ -83,6 +83,7 @@ k3s-ansible:
   extends: .ansible_apply
   before_script: 
     - cat $ansible > $WORKDIR/ansible 
+    - cat $kubeseal > $WORKDIR/kubeseal.yaml 
   needs: ["k3s"]
   rules:
     - if: $CI_PIPELINE_SOURCE == "schedule"
