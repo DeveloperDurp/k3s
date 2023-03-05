@@ -1,7 +1,7 @@
-export URL="https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20221219.0.x86_64.qcow2"
+export URL="https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20230227.0.x86_64.qcow2"
 export NAME="centos9.qcow2"
 export VM="CentOS9-Template"
-export VMID="999990"
+export VMID="99999"
 export LOCATION="NVMeSSD"
 
 echo Downloading Image
@@ -24,7 +24,7 @@ qm set $VMID --searchdomain durp.loc
 qm set $VMID --ciuser administrator
 
 echo Converting to Template
-qm template $ID
+qm template $VMID
 
 echo Deleting image
 rm $NAME
