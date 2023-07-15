@@ -1,6 +1,6 @@
-export URL="https://cloud.centos.org/centos/9-stream/x86_64/images/CentOS-Stream-GenericCloud-9-20230227.0.x86_64.qcow2"
-export NAME="centos9.qcow2"
-export VM="CentOS9-Template"
+export URL="https://cloud.debian.org/images/cloud/bookworm/20230711-1438/debian-12-generic-amd64-20230711-1438.qcow2"
+export NAME="Debian12.qcow2"
+export VM="Debian12-Template"
 export VMID="99999"
 export LOCATION="NVMeSSD"
 
