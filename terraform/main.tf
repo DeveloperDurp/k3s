@@ -18,7 +18,7 @@ resource "proxmox_vm_qemu" "VM" {
   boot        = "c"
   onboot      = true
   disk {
-    size    = 20G
+    size    = "20G"
     type    = "scsi"
     storage = ssd-domains
     ssd     = 1
