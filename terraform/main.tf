@@ -20,9 +20,10 @@ resource "proxmox_vm_qemu" "VM" {
   disk {
     size    = "20G"
     type    = "scsi"
+    format  = "raw"
     storage = "ssd-domains"
     ssd     = 1
-    backup  = false
+    backup  = true
   }
   network {
     model  = "virtio"
