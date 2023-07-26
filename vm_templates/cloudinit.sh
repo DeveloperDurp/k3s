@@ -2,19 +2,18 @@ export URL="https://cloud.debian.org/images/cloud/bookworm/20230711-1438/debian-
 export NAME="Debian12.qcow2"
 export VM="Debian12-Template"
 export VMID="99999"
-export LOCATION="NVMeSSD"
+export LOCATION="ssd-domains"
 
 echo Downloading Image
 wget $URL -O $NAME
 
 echo adding qemu agent
-virt-customize -a $NAME --install qemu-guest-agent,epel-release
-virt-customize -a $NAME --install ansible
+virt-customize -a $NAME --install qemu-guest-agent
 
 echo setting up VM
 qm create $VMID --name $VM --memory 1024 --cores 1 -cpu host --net0 virtio,bridge=vmbr1
 qm importdisk $VMID $NAME $LOCATION
-qm set $VMID --scsihw virtio-scsi-pci --scsi0 $LOCATION:vm-$VMID-disk-0,size=10G
+qm set $VMID --scsihw virtio-scsi-pci --scsi0 $LOCATION:$VMID/vm-$VMID-disk-0.raw,size=10G
 qm set $VMID --boot c --bootdisk scsi0 
 qm set $VMID --ide2 $LOCATION:cloudinit 
 qm set $VMID --serial0 socket --vga serial0
