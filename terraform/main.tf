@@ -3,8 +3,8 @@ resource "proxmox_vm_qemu" "VM" {
   ciuser      = "administrator"
   vmid        = "201"
   name        = "TestVM"
-  target_node = mothership
-  clone       = Debian12-Template
+  target_node = "mothership"
+  clone       = "Debian12-Template"
   qemu_os     = "other"
   full_clone  = true
   os_type     = "cloud-init"
@@ -20,7 +20,7 @@ resource "proxmox_vm_qemu" "VM" {
   disk {
     size    = "20G"
     type    = "scsi"
-    storage = ssd-domains
+    storage = "ssd-domains"
     ssd     = 1
     backup  = false
   }
