@@ -24,17 +24,47 @@ variable "pm_user" {
   default     = "root@pam"
 }
 
-#variable "VM" {
-#  description = "Defaults of master nodes in K3S"
-#  type = object({
-#    count    = number
-#    name     = list(string)
-#    cores    = number
-#    memory   = number
-#    drive    = string
-#    storage  = string
-#    template = list(string)
-#    node     = list(string)
-#    ip       = list(number)
-#  })
-#}
+variable "VM" {
+  description = "Defaults of master nodes in K3S"
+  type = object({
+    count    = number
+    name     = list(string)
+    cores    = number
+    memory   = number
+    drive    = string
+    storage  = string
+    template = list(string)
+    node     = list(string)
+    ip       = list(number)
+  })
+}
+
+variable "k3smaster" {
+  description = "Defaults of master nodes in K3S"
+  type = object({
+    count    = number
+    name     = list(string)
+    cores    = number
+    memory   = number
+    drive    = string
+    storage  = string
+    template = list(string)
+    node     = list(string)
+    ip       = list(number)
+  })
+}
+
+variable "k3server" {
+  description = "Defaults of master nodes in K3S"
+  type = object({
+    count    = number
+    name     = list(string)
+    cores    = number
+    memory   = number
+    drive    = string
+    storage  = string
+    template = list(string)
+    node     = list(string)
+    ip       = list(number)
+  })
+}
