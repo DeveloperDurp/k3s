@@ -15,13 +15,13 @@ k3master = {
 }
 
 k3server = {
-  count    = 1
-  name     = ["node01-dev"]
+  count    = 2
+  name     = ["node01-dev","node02-dev"]
   cores    = 4
   memory   = "4096"
   drive    = "60G"
   storage  = "ssd-domains"
-  template = ["Debian12-Template"]
-  node     = ["mothership"]
-  ip       = ["20"]
+  template = ["Debian12-Template","Debian12-Template"]
+  node     = ["mothership","mothership"]
+  ip       = ["20","21"]
 }
