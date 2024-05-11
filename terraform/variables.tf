@@ -8,11 +8,6 @@ variable "dnsserver" {
   type        = string
 }
 
-variable "sshkeys" {
-  description = "Public SSH key to inject into CloudInit"
-  type        = string
-}
-
 variable "pm_password" {
   description = "Passowrd to Proxmox provider"
   type        = string
