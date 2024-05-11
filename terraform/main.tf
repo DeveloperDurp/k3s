@@ -48,7 +48,7 @@
 resource "proxmox_vm_qemu" "k3master" {
   count       = var.k3master.count
   ciuser      = "administrator"
-  vmid        = "20${var.k3master.ip[count.index]}"
+  vmid        = "${var.k3master.vlan}${var.k3master.ip[count.index]}"
   name        = var.k3master.name[count.index]
   target_node = var.k3master.node[count.index]
   clone       = var.k3master.template[count.index]
@@ -82,7 +82,7 @@ resource "proxmox_vm_qemu" "k3master" {
     ]
   }
   #Cloud Init Settings
-  ipconfig0    = "ip=192.168.10.${var.k3master.ip[count.index]}/24,gw=192.168.10.1"
+  ipconfig0    = "ip=192.168.${var.k3master.vlan}.${var.k3master.ip[count.index]}/24,gw=192.168.10.1"
   searchdomain = "durp.loc"
   nameserver   = var.dnsserver
 }
@@ -90,7 +90,7 @@ resource "proxmox_vm_qemu" "k3master" {
 resource "proxmox_vm_qemu" "k3server" {
   count       = var.k3server.count
   ciuser      = "administrator"
-  vmid        = "20${var.k3server.ip[count.index]}"
+  vmid        = "${var.k3server.vlan}${var.k3server.ip[count.index]}"
   name        = var.k3server.name[count.index]
   target_node = var.k3server.node[count.index]
   clone       = var.k3server.template[count.index]
@@ -124,7 +124,7 @@ resource "proxmox_vm_qemu" "k3server" {
     ]
   }
   #Cloud Init Settings
-  ipconfig0    = "ip=192.168.10.${var.k3server.ip[count.index]}/24,gw=192.168.10.1"
+  ipconfig0    = "ip=192.168.${var.k3server.vlan}.${var.k3server.ip[count.index]}/24,gw=192.168.10.1"
   searchdomain = "durp.loc"
   nameserver   = var.dnsserver
 }

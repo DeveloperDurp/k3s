@@ -31,6 +31,7 @@ variable "k3master" {
     template = list(string)
     node     = list(string)
     ip       = list(number)
+    vlan     = number
   })
 }
 
@@ -46,5 +47,6 @@ variable "k3server" {
     template = list(string)
     node     = list(string)
     ip       = list(number)
+    vlan     = number
   })
 }

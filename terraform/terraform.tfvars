@@ -10,6 +10,7 @@ k3master = {
   template = ["Debian12-Template"]
   node     = ["overlord"]
   ip       = ["10"]
+  vlan     = 10
 }
 
 k3server = {
@@ -22,4 +23,5 @@ k3server = {
   template = ["Debian12-Template", "Debian12-Template"]
   node     = ["mothership", "mothership"]
   ip       = ["20", "21"]
+  vlan     = 10
 }
