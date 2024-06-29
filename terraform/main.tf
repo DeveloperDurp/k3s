@@ -84,9 +84,9 @@ resource "proxmox_vm_qemu" "k3master" {
     scsi {
       scsi0 {
         disk {
-          size    = local.config.k3master.drive
-          format  = "raw"
-          storage = local.config.k3master.storage
+          size       = local.config.k3master.drive
+          format     = "raw"
+          storage    = local.config.k3master.storage
           emulatessd = true
         }
       }
@@ -130,9 +130,9 @@ resource "proxmox_vm_qemu" "k3server" {
     scsi {
       scsi0 {
         disk {
-          size    = local.config.k3master.drive
-          format  = "raw"
-          storage = local.config.k3master.storage
+          size       = local.config.k3master.drive
+          format     = "raw"
+          storage    = local.config.k3master.storage
           emulatessd = true
         }
       }
