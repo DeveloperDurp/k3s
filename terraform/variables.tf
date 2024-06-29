@@ -54,4 +54,5 @@ variable "k3server" {
 variable "environment" {
   description = "environment of the deployment"
   type        = string
+  default     = "dev"
 }
