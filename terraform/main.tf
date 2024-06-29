@@ -55,7 +55,7 @@ locals {
       }
     }
     default = {
-
+      sshkeys = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL88nWIyxN4aYTJCxz2/MiorLeNtoVwir995tOXzdzCr laptop"
     }
   }
 }
@@ -81,6 +81,7 @@ resource "proxmox_vm_qemu" "k3master" {
   bootdisk    = "scsi0"
   boot        = "c"
   onboot      = true
+  sshkeys     = local.config.sshkeys
   disks {
     ide {
       ide2 {
@@ -136,6 +137,7 @@ resource "proxmox_vm_qemu" "k3server" {
   bootdisk    = "scsi0"
   boot        = "c"
   onboot      = true
+  sshkeys     = local.config.sshkeys
   disks {
     ide {
       ide2 {
