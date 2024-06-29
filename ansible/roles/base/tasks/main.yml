@@ -13,25 +13,25 @@
   include_tasks:
     file: ./templates/packages.yml
 
-- name: Create user account
-  user: 
-    name: "{{ username }}"
-    password: "{{ userpassword }}"
-    groups: sudo
-    shell: /bin/bash
-    state: present
-    createhome: yes
-  when: ansible_os_family == "Debian"   
+      #- name: Create user account
+      #  user: 
+      #    name: "{{ username }}"
+      #    password: "{{ userpassword }}"
+      #    groups: sudo
+      #    shell: /bin/bash
+      #    state: present
+      #    createhome: yes
+      #  when: ansible_os_family == "Debian"   
 
-- name: Create user account
-  user: 
-    name: "{{ username }}"
-    password: "{{ userpassword }}"
-    shell: /bin/bash
-    groups: wheel
-    state: present
-    createhome: yes
-  when: ansible_os_family == "RedHat"   
+      #- name: Create user account
+      #  user: 
+      #    name: "{{ username }}"
+      #    password: "{{ userpassword }}"
+      #    shell: /bin/bash
+      #    groups: wheel
+      #    state: present
+      #    createhome: yes
+      #  when: ansible_os_family == "RedHat"   
     
 - name: Run SSH tasks
   include_tasks:
