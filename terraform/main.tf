@@ -42,7 +42,7 @@ locals {
         vlan     = 10
       }
       k3server = {
-        count    = 0
+        count    = 2
         name     = ["node01-dev", "node02-dev"]
         cores    = 4
         memory   = "4096"
@@ -72,6 +72,7 @@ resource "proxmox_vm_qemu" "k3master" {
   os_type     = "cloud-init"
   agent       = 1
   cores       = local.config.k3master.cores
+  numa        = true
   hotplug     = "network,disk,usb,cpu,memory"
   sockets     = 1
   cpu         = "host"
@@ -126,6 +127,7 @@ resource "proxmox_vm_qemu" "k3server" {
   os_type     = "cloud-init"
   agent       = 1
   cores       = local.config.k3server.cores
+  numa        = true
   hotplug     = "network,disk,usb,cpu,memory"
   sockets     = 1
   cpu         = "host"
@@ -135,6 +137,13 @@ resource "proxmox_vm_qemu" "k3server" {
   boot        = "c"
   onboot      = true
   disks {
+    ide {
+      ide2 {
+        cloudinit {
+          storage = local.config.k3master.storage
+        }
+      }
+    }
     scsi {
       scsi0 {
         disk {
