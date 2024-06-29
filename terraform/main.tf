@@ -79,8 +79,11 @@ locals {
     default = {
 
     }
-    config = merge(local.env_config["default"], lookup(local.env_config, var.environment, {}))
   }
+}
+
+locals {
+  config = merge(local.env_config["default"], lookup(local.env_config, var.environment, {}))
 }
 
 resource "proxmox_vm_qemu" "k3master" {
