@@ -1,49 +1,3 @@
-#resource "proxmox_vm_qemu" "VM" {
-#  count       = 1
-#  ciuser      = "administrator"
-#  vmid        = "201"
-#  name        = "TestVM"
-#  target_node = "mothership"
-#  clone       = "Debian12-Template"
-#  qemu_os     = "other"
-#  full_clone  = true
-#  os_type     = "cloud-init"
-#  agent       = 1
-#  cores       = 2
-#  sockets     = 1
-#  cpu         = "host"
-#  memory      = 2048
-#  scsihw      = "virtio-scsi-pci"
-#  bootdisk    = "scsi0"
-#  boot        = "c"
-#  onboot      = true
-#  disk {
-#    size    = "20G"
-#    type    = "scsi"
-#    format  = "raw"
-#    storage = "ssd-domains"
-#    ssd     = 1
-#    backup  = true
-#  }
-#  network {
-#    model  = "virtio"
-#    bridge = "vmbr1"
-#  }
-#  lifecycle {
-#    ignore_changes = [
-#      network,
-#    ]
-#  }
-#  #Cloud Init Settings
-#  ipconfig0    = "ip=192.168.20.20/24,gw=192.168.20.1"
-#  searchdomain = "durp.loc"
-#  nameserver   = var.dnsserver
-#  sshkeys      = var.sshkeys
-#}
-#
-
-#k3s
-#-----------------------------------------------------
 locals {
   env_config = {
     prd = {
@@ -106,9 +60,6 @@ locals {
   }
 }
 
-locals {
-  config = merge(local.env_config["default"], lookup(local.env_config, var.environment, {}))
-}
 
 resource "proxmox_vm_qemu" "k3master" {
   count       = local.config.k3master.count
@@ -129,13 +80,17 @@ resource "proxmox_vm_qemu" "k3master" {
   bootdisk    = "scsi0"
   boot        = "c"
   onboot      = true
-  disk {
-    size    = local.config.k3master.drive
-    type    = "scsi"
-    format  = "raw"
-    storage = local.config.k3master.storage
-    ssd     = 1
-    backup  = false
+  disks {
+    scsi {
+      scsi0 {
+        disk {
+          size    = local.config.k3master.drive
+          format  = "raw"
+          storage = local.config.k3master.storage
+          emulatessd = true
+        }
+      }
+    }
   }
   network {
     model  = "virtio"
@@ -171,13 +126,17 @@ resource "proxmox_vm_qemu" "k3server" {
   bootdisk    = "scsi0"
   boot        = "c"
   onboot      = true
-  disk {
-    size    = local.config.k3server.drive
-    type    = "scsi"
-    format  = "raw"
-    storage = local.config.k3server.storage
-    ssd     = 1
-    backup  = false
+  disks {
+    scsi {
+      scsi0 {
+        disk {
+          size    = local.config.k3master.drive
+          format  = "raw"
+          storage = local.config.k3master.storage
+          emulatessd = true
+        }
+      }
+    }
   }
   network {
     model  = "virtio"

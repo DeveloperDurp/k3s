@@ -1,3 +1,7 @@
+locals {
+  config = merge(local.env_config["default"], lookup(local.env_config, var.environment, {}))
+}
+
 variable "pm_api_url" {
   description = "API URL to Proxmox provider"
   type        = string
