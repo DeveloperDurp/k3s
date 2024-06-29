@@ -42,7 +42,7 @@ locals {
         vlan     = 10
       }
       k3server = {
-        count    = 2
+        count    = 0
         name     = ["node01-dev", "node02-dev"]
         cores    = 4
         memory   = "4096"
@@ -91,7 +91,6 @@ resource "proxmox_vm_qemu" "k3master" {
     scsi {
       scsi0 {
         disk {
-          id         = 0
           size       = local.config.k3master.drive
           format     = "raw"
           storage    = local.config.k3master.storage
