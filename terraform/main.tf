@@ -60,7 +60,6 @@ locals {
   }
 }
 
-
 resource "proxmox_vm_qemu" "k3master" {
   count       = local.config.k3master.count
   ciuser      = "administrator"
