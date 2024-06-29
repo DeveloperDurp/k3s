@@ -50,3 +50,8 @@ variable "k3server" {
     vlan     = number
   })
 }
+
+variable "environment" {
+  description = "environment of the deployment"
+  type        = string
+}
