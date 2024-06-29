@@ -19,7 +19,7 @@ locals {
         name     = ["node01-prd", "node02-prd"]
         cores    = 4
         memory   = "4096"
-        drive    = "60G"
+        drive    = "80G"
         storage  = "cache-domains"
         template = ["Debian12-Template", "Debian12-Template"]
         node     = ["mothership", "mothership"]
