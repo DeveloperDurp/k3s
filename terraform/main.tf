@@ -67,7 +67,7 @@ resource "proxmox_vm_qemu" "k3master" {
   name        = local.config.k3master.name[count.index]
   target_node = local.config.k3master.node[count.index]
   clone       = local.config.k3master.template[count.index]
-  qemu_os     = "other"
+  qemu_os     = "l26"
   full_clone  = true
   os_type     = "cloud-init"
   agent       = 1
@@ -78,8 +78,8 @@ resource "proxmox_vm_qemu" "k3master" {
   cpu         = "host"
   memory      = local.config.k3master.memory
   scsihw      = "virtio-scsi-pci"
-  bootdisk    = "scsi0"
-  boot        = "c"
+  #bootdisk    = "scsi0"
+  boot        = "order=scsi0"
   onboot      = true
   sshkeys     = local.config.sshkeys
   disks {
@@ -123,7 +123,7 @@ resource "proxmox_vm_qemu" "k3server" {
   name        = local.config.k3server.name[count.index]
   target_node = local.config.k3server.node[count.index]
   clone       = local.config.k3server.template[count.index]
-  qemu_os     = "other"
+  qemu_os     = "l26"
   full_clone  = true
   os_type     = "cloud-init"
   agent       = 1
@@ -134,8 +134,8 @@ resource "proxmox_vm_qemu" "k3server" {
   cpu         = "host"
   memory      = local.config.k3server.memory
   scsihw      = "virtio-scsi-pci"
-  bootdisk    = "scsi0"
-  boot        = "c"
+  #bootdisk    = "scsi0"
+  boot        = "order=scsi0"
   onboot      = true
   sshkeys     = local.config.sshkeys
   disks {
