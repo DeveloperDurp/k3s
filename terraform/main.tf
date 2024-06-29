@@ -72,6 +72,7 @@ resource "proxmox_vm_qemu" "k3master" {
   os_type     = "cloud-init"
   agent       = 1
   cores       = local.config.k3master.cores
+  hotplug     = "network,disk,usb,cpu,memory"
   sockets     = 1
   cpu         = "host"
   memory      = local.config.k3master.memory
@@ -80,9 +81,17 @@ resource "proxmox_vm_qemu" "k3master" {
   boot        = "c"
   onboot      = true
   disks {
+    ide {
+      ide2 {
+        cloudinit {
+          storage = local.config.k3master.storage
+        }
+      }
+    }
     scsi {
       scsi0 {
         disk {
+          id         = 0
           size       = local.config.k3master.drive
           format     = "raw"
           storage    = local.config.k3master.storage
@@ -118,6 +127,7 @@ resource "proxmox_vm_qemu" "k3server" {
   os_type     = "cloud-init"
   agent       = 1
   cores       = local.config.k3server.cores
+  hotplug     = "network,disk,usb,cpu,memory"
   sockets     = 1
   cpu         = "host"
   memory      = local.config.k3server.memory
