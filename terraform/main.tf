@@ -2,6 +2,7 @@ locals {
   env_config = {
     prd = {
       dnsserver = "192.168.11.1"
+      tags      = "k3s-prd"
       k3master = {
         count    = 1
         name     = ["master-prd"]
@@ -29,6 +30,7 @@ locals {
     }
     dev = {
       dnsserver = "192.168.10.1"
+      tags      = "k3s-prd"
       k3master = {
         count    = 1
         name     = ["master-dev"]
@@ -67,6 +69,7 @@ resource "proxmox_vm_qemu" "k3master" {
   name        = local.config.k3master.name[count.index]
   target_node = local.config.k3master.node[count.index]
   clone       = local.config.k3master.template[count.index]
+  tags        = local.config.tags 
   qemu_os     = "l26"
   full_clone  = true
   os_type     = "cloud-init"
@@ -123,6 +126,7 @@ resource "proxmox_vm_qemu" "k3server" {
   name        = local.config.k3server.name[count.index]
   target_node = local.config.k3server.node[count.index]
   clone       = local.config.k3server.template[count.index]
+  tags        = local.config.tags 
   qemu_os     = "l26"
   full_clone  = true
   os_type     = "cloud-init"
