@@ -97,7 +97,7 @@ resource "proxmox_vm_qemu" "k3master" {
   }
   network {
     model  = "virtio"
-    bridge = "vmbr1"
+    bridge = "vmbr0"
     tag    = local.config.vlan
   }
   #Cloud Init Settings
@@ -147,7 +147,7 @@ resource "proxmox_vm_qemu" "k3server" {
   }
   network {
     model  = "virtio"
-    bridge = "vmbr1"
+    bridge = "vmbr0"
     tag    = local.config.vlan
   }
   #Cloud Init Settings
