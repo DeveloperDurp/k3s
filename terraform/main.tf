@@ -3,61 +3,53 @@ locals {
     prd = {
       dnsserver = "192.168.11.1"
       tags      = "k3s_prd"
+      vlan      = 11
       k3master = {
-        count    = 1
-        name     = ["master-prd"]
-        cores    = 4
-        memory   = "4096"
-        drive    = "20G"
-        storage  = "cache-domains"
-        template = ["Debian12-Template"]
-        node     = ["overlord"]
-        ip       = ["10"]
-        vlan     = 11
+        count  = 1
+        name   = ["master-prd"]
+        cores  = 4
+        memory = "4096"
+        drive  = "20G"
+        node   = ["overlord"]
+        ip     = ["10"]
       }
       k3server = {
-        count    = 2
-        name     = ["node01-prd", "node02-prd"]
-        cores    = 4
-        memory   = "4096"
-        drive    = "80G"
-        storage  = "cache-domains"
-        template = ["Debian12-Template", "Debian12-Template"]
-        node     = ["mothership", "mothership"]
-        ip       = ["20", "21"]
-        vlan     = 11
+        count  = 2
+        name   = ["node01-prd", "node02-prd"]
+        cores  = 4
+        memory = "4096"
+        drive  = "80G"
+        node   = ["mothership", "mothership"]
+        ip     = ["20", "21"]
       }
     }
     dev = {
       dnsserver = "192.168.10.1"
       tags      = "k3s_dev"
+      vlan      = 10
       k3master = {
-        count    = 1
-        name     = ["master-dev"]
-        cores    = 4
-        memory   = "4096"
-        drive    = "20G"
-        storage  = "cache-domains"
-        template = ["Debian12-Template"]
-        node     = ["overlord"]
-        ip       = ["10"]
-        vlan     = 10
+        count  = 1
+        name   = ["master-dev"]
+        cores  = 4
+        memory = "4096"
+        drive  = "20G"
+        node   = ["overlord"]
+        ip     = ["10"]
       }
       k3server = {
-        count    = 2
-        name     = ["node01-dev", "node02-dev"]
-        cores    = 4
-        memory   = "4096"
-        drive    = "60G"
-        storage  = "cache-domains"
-        template = ["Debian12-Template", "Debian12-Template"]
-        node     = ["mothership", "mothership"]
-        ip       = ["20", "21"]
-        vlan     = 10
+        count  = 2
+        name   = ["node01-dev", "node02-dev"]
+        cores  = 4
+        memory = "4096"
+        drive  = "60G"
+        node   = ["mothership", "mothership"]
+        ip     = ["20", "21"]
       }
     }
     default = {
-      sshkeys = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL88nWIyxN4aYTJCxz2/MiorLeNtoVwir995tOXzdzCr laptop"
+      sshkeys  = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL88nWIyxN4aYTJCxz2/MiorLeNtoVwir995tOXzdzCr laptop"
+      template = "Debian12-Template"
+      storage  = "cache-domains"
     }
   }
 }
@@ -68,7 +60,7 @@ resource "proxmox_vm_qemu" "k3master" {
   vmid        = "${local.config.k3master.vlan}${local.config.k3master.ip[count.index]}"
   name        = local.config.k3master.name[count.index]
   target_node = local.config.k3master.node[count.index]
-  clone       = local.config.k3master.template[count.index]
+  clone       = local.config.template
   tags        = local.config.tags
   qemu_os     = "l26"
   full_clone  = true
@@ -89,7 +81,7 @@ resource "proxmox_vm_qemu" "k3master" {
     ide {
       ide2 {
         cloudinit {
-          storage = local.config.k3master.storage
+          storage = local.config.storage
         }
       }
     }
@@ -98,7 +90,7 @@ resource "proxmox_vm_qemu" "k3master" {
         disk {
           size       = local.config.k3master.drive
           format     = "raw"
-          storage    = local.config.k3master.storage
+          storage    = local.config.storage
           emulatessd = true
         }
       }
@@ -115,7 +107,7 @@ resource "proxmox_vm_qemu" "k3master" {
     ]
   }
   #Cloud Init Settings
-  ipconfig0    = "ip=192.168.${local.config.k3master.vlan}.${local.config.k3master.ip[count.index]}/24,gw=192.168.10.1"
+  ipconfig0    = "ip=192.168.${local.config.vlan}.${local.config.k3master.ip[count.index]}/24,gw=${local.dnsserver}"
   searchdomain = "durp.loc"
   nameserver   = local.config.dnsserver
 }
@@ -126,7 +118,7 @@ resource "proxmox_vm_qemu" "k3server" {
   vmid        = "${local.config.k3server.vlan}${local.config.k3server.ip[count.index]}"
   name        = local.config.k3server.name[count.index]
   target_node = local.config.k3server.node[count.index]
-  clone       = local.config.k3server.template[count.index]
+  clone       = local.config.template
   tags        = local.config.tags
   qemu_os     = "l26"
   full_clone  = true
@@ -147,7 +139,7 @@ resource "proxmox_vm_qemu" "k3server" {
     ide {
       ide2 {
         cloudinit {
-          storage = local.config.k3master.storage
+          storage = local.config.storage
         }
       }
     }
@@ -156,7 +148,7 @@ resource "proxmox_vm_qemu" "k3server" {
         disk {
           size       = local.config.k3master.drive
           format     = "raw"
-          storage    = local.config.k3master.storage
+          storage    = local.config.storage
           emulatessd = true
         }
       }
@@ -172,7 +164,7 @@ resource "proxmox_vm_qemu" "k3server" {
     ]
   }
   #Cloud Init Settings
-  ipconfig0    = "ip=192.168.${local.config.k3server.vlan}.${local.config.k3server.ip[count.index]}/24,gw=192.168.10.1"
+  ipconfig0    = "ip=192.168.${local.config.vlan}.${local.config.k3server.ip[count.index]}/24,gw=${local.config.dnsserver}"
   searchdomain = "durp.loc"
   nameserver   = local.config.dnsserver
 }
