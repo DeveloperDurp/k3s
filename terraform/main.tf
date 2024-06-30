@@ -57,7 +57,7 @@ locals {
 resource "proxmox_vm_qemu" "k3master" {
   count       = local.config.k3master.count
   ciuser      = "administrator"
-  vmid        = "${local.config.k3master.vlan}${local.config.k3master.ip[count.index]}"
+  vmid        = "${local.config.vlan}${local.config.k3master.ip[count.index]}"
   name        = local.config.k3master.name[count.index]
   target_node = local.config.k3master.node[count.index]
   clone       = local.config.template
@@ -115,7 +115,7 @@ resource "proxmox_vm_qemu" "k3master" {
 resource "proxmox_vm_qemu" "k3server" {
   count       = local.config.k3server.count
   ciuser      = "administrator"
-  vmid        = "${local.config.k3server.vlan}${local.config.k3server.ip[count.index]}"
+  vmid        = "${local.config.vlan}${local.config.k3server.ip[count.index]}"
   name        = local.config.k3server.name[count.index]
   target_node = local.config.k3server.node[count.index]
   clone       = local.config.template
