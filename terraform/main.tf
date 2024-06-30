@@ -2,7 +2,7 @@ locals {
   env_config = {
     prd = {
       dnsserver = "192.168.11.1"
-      tags      = "k3s-prd"
+      tags      = "k3s_prd"
       k3master = {
         count    = 1
         name     = ["master-prd"]
@@ -30,7 +30,7 @@ locals {
     }
     dev = {
       dnsserver = "192.168.10.1"
-      tags      = "k3s-prd"
+      tags      = "k3s_dev"
       k3master = {
         count    = 1
         name     = ["master-dev"]
@@ -107,6 +107,7 @@ resource "proxmox_vm_qemu" "k3master" {
   network {
     model  = "virtio"
     bridge = "vmbr1"
+    tag    = local.config.vlan
   }
   lifecycle {
     ignore_changes = [
