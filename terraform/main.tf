@@ -138,7 +138,7 @@ resource "proxmox_vm_qemu" "k3server" {
     virtio {
       virtio0 {
         disk {
-          size    = local.config.k3master.drive
+          size    = local.config.k3server.drive
           format  = local.config.format
           storage = local.config.storage
         }
