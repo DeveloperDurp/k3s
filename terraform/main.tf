@@ -50,6 +50,8 @@ locals {
       sshkeys  = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL88nWIyxN4aYTJCxz2/MiorLeNtoVwir995tOXzdzCr laptop"
       template = "Debian12-Template"
       storage  = "cache-domains"
+      emulatessd = true
+      format     = "raw"
     }
   }
 }
@@ -67,14 +69,12 @@ resource "proxmox_vm_qemu" "k3master" {
   os_type     = "cloud-init"
   agent       = 1
   cores       = local.config.k3master.cores
-  numa        = true
-  hotplug     = "network,disk,usb,cpu,memory"
   sockets     = 1
   cpu         = "host"
   memory      = local.config.k3master.memory
   scsihw      = "virtio-scsi-pci"
   #bootdisk    = "scsi0"
-  boot    = "order=scsi0"
+  boot    = "order=virtio0"
   onboot  = true
   sshkeys = local.config.sshkeys
   disks {
@@ -85,13 +85,12 @@ resource "proxmox_vm_qemu" "k3master" {
         }
       }
     }
-    scsi {
-      scsi0 {
+    virtio {
+      virtio0 {
         disk {
           size       = local.config.k3master.drive
-          format     = "raw"
+          format     = local.config.format
           storage    = local.config.storage
-          emulatessd = true
         }
       }
     }
@@ -101,11 +100,6 @@ resource "proxmox_vm_qemu" "k3master" {
     bridge = "vmbr1"
     tag    = local.config.vlan
   }
-  # lifecycle {
-  #   ignore_changes = [
-  #     network,
-  #   ]
-  # }
   #Cloud Init Settings
   ipconfig0    = "ip=192.168.${local.config.vlan}.${local.config.k3master.ip[count.index]}/24,gw=${local.config.dnsserver}"
   searchdomain = "durp.loc"
@@ -125,14 +119,12 @@ resource "proxmox_vm_qemu" "k3server" {
   os_type     = "cloud-init"
   agent       = 1
   cores       = local.config.k3server.cores
-  numa        = true
-  hotplug     = "network,disk,usb,cpu,memory"
   sockets     = 1
   cpu         = "host"
   memory      = local.config.k3server.memory
   scsihw      = "virtio-scsi-pci"
   #bootdisk    = "scsi0"
-  boot    = "order=scsi0"
+  boot    = "order=virtio0"
   onboot  = true
   sshkeys = local.config.sshkeys
   disks {
@@ -143,13 +135,12 @@ resource "proxmox_vm_qemu" "k3server" {
         }
       }
     }
-    scsi {
-      scsi0 {
+    virtio {
+      virtio0 {
         disk {
           size       = local.config.k3master.drive
-          format     = "raw"
+          format     = local.config.format
           storage    = local.config.storage
-          emulatessd = true
         }
       }
     }
@@ -157,11 +148,7 @@ resource "proxmox_vm_qemu" "k3server" {
   network {
     model  = "virtio"
     bridge = "vmbr1"
-  }
-  lifecycle {
-    ignore_changes = [
-      network,
-    ]
+    tag    = local.config.vlan
   }
   #Cloud Init Settings
   ipconfig0    = "ip=192.168.${local.config.vlan}.${local.config.k3server.ip[count.index]}/24,gw=${local.config.dnsserver}"
