@@ -69,7 +69,7 @@ resource "proxmox_vm_qemu" "k3master" {
   name        = local.config.k3master.name[count.index]
   target_node = local.config.k3master.node[count.index]
   clone       = local.config.k3master.template[count.index]
-  tags        = local.config.tags 
+  tags        = local.config.tags
   qemu_os     = "l26"
   full_clone  = true
   os_type     = "cloud-init"
@@ -126,7 +126,7 @@ resource "proxmox_vm_qemu" "k3server" {
   name        = local.config.k3server.name[count.index]
   target_node = local.config.k3server.node[count.index]
   clone       = local.config.k3server.template[count.index]
-  tags        = local.config.tags 
+  tags        = local.config.tags
   qemu_os     = "l26"
   full_clone  = true
   os_type     = "cloud-init"
