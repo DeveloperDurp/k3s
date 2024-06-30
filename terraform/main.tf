@@ -9,7 +9,7 @@ locals {
         name   = ["master-prd"]
         cores  = 4
         memory = "4096"
-        drive  = "20G"
+        drive  = 20
         node   = ["overlord"]
         ip     = ["10"]
       }
@@ -18,7 +18,7 @@ locals {
         name   = ["node01-prd", "node02-prd"]
         cores  = 4
         memory = "4096"
-        drive  = "80G"
+        drive  = 80
         node   = ["mothership", "mothership"]
         ip     = ["20", "21"]
       }
@@ -32,7 +32,7 @@ locals {
         name   = ["master-dev"]
         cores  = 4
         memory = "4096"
-        drive  = "20G"
+        drive  = 20
         node   = ["overlord"]
         ip     = ["10"]
       }
@@ -41,7 +41,7 @@ locals {
         name   = ["node01-dev", "node02-dev"]
         cores  = 4
         memory = "4096"
-        drive  = "60G"
+        drive  = 60
         node   = ["mothership", "mothership"]
         ip     = ["20", "21"]
       }
