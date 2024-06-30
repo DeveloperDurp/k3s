@@ -101,11 +101,11 @@ resource "proxmox_vm_qemu" "k3master" {
     bridge = "vmbr1"
     tag    = local.config.vlan
   }
-  lifecycle {
-    ignore_changes = [
-      network,
-    ]
-  }
+  # lifecycle {
+  #   ignore_changes = [
+  #     network,
+  #   ]
+  # }
   #Cloud Init Settings
   ipconfig0    = "ip=192.168.${local.config.vlan}.${local.config.k3master.ip[count.index]}/24,gw=${local.config.dnsserver}"
   searchdomain = "durp.loc"
