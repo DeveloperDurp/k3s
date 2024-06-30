@@ -47,9 +47,9 @@ locals {
       }
     }
     default = {
-      sshkeys  = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL88nWIyxN4aYTJCxz2/MiorLeNtoVwir995tOXzdzCr laptop"
-      template = "Debian12-Template"
-      storage  = "cache-domains"
+      sshkeys    = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIL88nWIyxN4aYTJCxz2/MiorLeNtoVwir995tOXzdzCr laptop"
+      template   = "Debian12-Template"
+      storage    = "cache-domains"
       emulatessd = true
       format     = "raw"
     }
@@ -88,9 +88,9 @@ resource "proxmox_vm_qemu" "k3master" {
     virtio {
       virtio0 {
         disk {
-          size       = local.config.k3master.drive
-          format     = local.config.format
-          storage    = local.config.storage
+          size    = local.config.k3master.drive
+          format  = local.config.format
+          storage = local.config.storage
         }
       }
     }
@@ -138,9 +138,9 @@ resource "proxmox_vm_qemu" "k3server" {
     virtio {
       virtio0 {
         disk {
-          size       = local.config.k3master.drive
-          format     = local.config.format
-          storage    = local.config.storage
+          size    = local.config.k3master.drive
+          format  = local.config.format
+          storage = local.config.storage
         }
       }
     }
