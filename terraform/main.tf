@@ -107,7 +107,7 @@ resource "proxmox_vm_qemu" "k3master" {
     ]
   }
   #Cloud Init Settings
-  ipconfig0    = "ip=192.168.${local.config.vlan}.${local.config.k3master.ip[count.index]}/24,gw=${local.dnsserver}"
+  ipconfig0    = "ip=192.168.${local.config.vlan}.${local.config.k3master.ip[count.index]}/24,gw=${local.config.dnsserver}"
   searchdomain = "durp.loc"
   nameserver   = local.config.dnsserver
 }
