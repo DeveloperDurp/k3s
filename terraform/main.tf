@@ -14,13 +14,13 @@ locals {
         ip     = ["10"]
       }
       k3server = {
-        count  = 2
-        name   = ["node01-prd", "node02-prd"]
+        count  = 4
+        name   = ["node01-prd", "node02-prd", "node03-prd", "node04-prd"]
         cores  = 4
         memory = "4096"
         drive  = 80
-        node   = ["mothership", "mothership"]
-        ip     = ["20", "21"]
+        node   = ["mothership", "overlord", "mothership", "overlord"]
+        ip     = ["20", "21", "22", "23"]
       }
     }
     dev = {
@@ -37,13 +37,13 @@ locals {
         ip     = ["10"]
       }
       k3server = {
-        count  = 2
-        name   = ["node01-dev", "node02-dev"]
+        count  = 4
+        name   = ["node01-dev", "node02-dev", "node03-dev", "node04-dev"]
         cores  = 4
         memory = "4096"
         drive  = 60
-        node   = ["mothership", "mothership"]
-        ip     = ["20", "21"]
+        node   = ["mothership", "overlord", "mothership", "overlord"]
+        ip     = ["20", "21", "22", "23"]
       }
     }
     default = {
