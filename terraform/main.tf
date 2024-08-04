@@ -14,7 +14,7 @@ locals {
         ip     = ["31", "32", "33"]
       }
       k3server = {
-        count  = 0
+        count = 0
       }
     }
     prd = {
