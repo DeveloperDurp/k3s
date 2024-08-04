@@ -13,6 +13,9 @@ locals {
         node   = ["gatekeeper", "mothership", "overlord"]
         ip     = ["31", "32", "33"]
       }
+      k3server = {
+        count  = 0
+      }
     }
     prd = {
       dnsserver = "192.168.11.1"
