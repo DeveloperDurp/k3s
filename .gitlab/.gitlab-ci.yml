@@ -3,3 +3,42 @@ include:
     ref: main
     file: 
       - 'pipelines/terraform.yml'
+  - project: 'developerdurp/yml'
+    ref: 'main'
+    file: 
+      - 'jobs/terraform.yml'
+
+plan-dmz:
+  stage: plan
+  environment:
+    name: dmz
+  variables:
+    ENVIRONMENT_NAME: dmz
+  allow_failure: false
+  extends: .terraform_plan
+  needs: ["validate","format"]
+
+
+apply-dmz:
+  stage: apply
+  environment:
+    name: dmz
+  variables:
+    ENVIRONMENT_NAME: dmz
+  allow_failure: false
+  extends: .terraform_apply   
+  rules:
+    - when: manual  
+
+destroy-dmz:
+  stage: destroy
+  environment:
+    name: dmz
+  variables:
+    ENVIRONMENT_NAME: dmz
+  allow_failure: false
+  extends: .terraform_destroy  
+  needs: ["apply-development"]
+  rules:       
+    - when: manual
+
