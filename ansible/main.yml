@@ -20,14 +20,3 @@
   become: yes
   roles:
     - k3s/node
-
-- hosts: master
-  become: yes
-  roles:
-    - role: k3s/post    
-
-      #- hosts: master[0]
-      #  become: yes
-      #  roles:
-      #    - k3s/argocd
-      #

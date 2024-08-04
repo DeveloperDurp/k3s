@@ -16,3 +16,4 @@ provider "proxmox" {
   pm_password     = var.pm_password
   pm_debug        = false
 }
+

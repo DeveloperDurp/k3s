@@ -6,14 +6,14 @@
     update_cache: yes
     only_upgrade: yes
   when: ansible_os_family == "Debian"    
-  retries: 3
+  retries: 300
   delay: 10
 
 - name: Remove packages not needed anymore
   apt:
     autoremove: yes  
   when: ansible_os_family == "Debian"        
-  retries: 3
+  retries: 300
   delay: 10      
       
 - name: Install required packages Debian
@@ -22,7 +22,7 @@
     pkg: "{{ item }}"
   with_items:  "{{ required_packages }}" 
   when: ansible_os_family == "Debian"     
-  retries: 3
+  retries: 300
   delay: 10  
     
 - name: Update packages RedHat
@@ -32,14 +32,14 @@
     update_cache: yes
     update_only: yes
   when: ansible_os_family == "RedHat"  
-  retries: 3
+  retries: 300
   delay: 10  
 
 - name: Remove packates not needed anymore
   yum:
     autoremove: yes
   when: ansible_os_family == "RedHat"      
-  retries: 3
+  retries: 300
   delay: 10  
       
 - name: Install required packages RedHat
@@ -49,5 +49,5 @@
     pkg: "{{ item }}"
   with_items:  "{{ redhat_required_packages }}" 
   when: ansible_os_family == "RedHat"   
-  retries: 3
+  retries: 300
   delay: 10  

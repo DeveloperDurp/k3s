@@ -1,6 +1,6 @@
 ---
 k3s_version: v1.29.2+k3s1
-ansible_user: user
+ansible_user: administrator
 systemd_dir: /etc/systemd/system
 
 # Set your timezone
@@ -10,7 +10,7 @@ system_timezone: "America/Chicago"
 flannel_iface: "eth0"
 
 # apiserver_endpoint is virtual ip-address which will be configured on each master
-apiserver_endpoint: "192.168.10.10"
+apiserver_endpoint: "{{ lookup('env','api_endpoint') }}"
 
 # k3s_token is required  masters can talk together securely
 k3s_token: "{{ lookup('env','k3s_token') }}"
@@ -47,10 +47,6 @@ extra_agent_args: >-
 # image tag for kube-vip
 kube_vip_tag_version: "v0.7.2"
 
-# image tag for metal lb
-metal_lb_speaker_tag_version: "v0.14.3"
-metal_lb_controller_tag_version: "v0.14.3"
-# metallb ip range for load balancer
-metal_lb_ip_range: "192.168.10.130-192.168.10.140"
+username: "administrator"
 
-username: "user"
+environment: "{{ lookup('env','ENVIRONMENT_NAME') }}"
