@@ -1,22 +1,5 @@
 locals {
   env_config = {
-    dmz = {
-      dnsserver = "192.168.11.1"
-      tags      = "k3s_dmz"
-      vlan      = 11
-      k3master = {
-        count   = 3
-        name    = ["dmz-master01", "dmz-master02", "dmz-master03"]
-        cores   = 4
-        memory  = "8192"
-        drive   = 40
-        node    = ["gatekeeper", "mothership", "overlord"]
-        ip      = ["31", "32", "33"]
-      }
-      k3server = {
-        count = 0
-      }
-    }
     prd = {
       dnsserver = "192.168.11.1"
       tags      = "k3s_prd"
