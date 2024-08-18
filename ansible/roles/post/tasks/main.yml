@@ -1,7 +1,6 @@
-tasks:
-  - name: ansible copy file from remote to local.
-    fetch:
-      src: /home/administrator/.kube/config
-      dest: /mnt/user/data/
-      flat: yes
-    when: ansible_hostname == hostvars[groups['master'][0]]['ansible_hostname']
+- name: ansible copy file from remote to local.
+  fetch:
+    src: /home/administrator/.kube/config
+    dest: /mnt/user/data/
+    flat: yes
+  when: ansible_hostname == hostvars[groups['master'][0]]['ansible_hostname']
