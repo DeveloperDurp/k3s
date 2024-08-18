@@ -99,7 +99,7 @@ resource "proxmox_vm_qemu" "k3master" {
     ide {
       ide2 {
         cloudinit {
-          storage = local.config.storage
+          storage = local.config.k3master.storage != "" ? local.config.k3master.storage : local.config.storage
         }
       }
     }
