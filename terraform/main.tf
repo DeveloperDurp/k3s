@@ -24,20 +24,20 @@ locals {
       k3master = {
         count  = 1
         name   = ["master-prd"]
-        cores  = 4
+        cores  = 2
         memory = "4096"
         drive  = 20
-        node   = ["overlord"]
+        node   = ["gatekeeper"]
         ip     = ["10"]
       }
       k3server = {
-        count  = 4
-        name   = ["node01-prd", "node02-prd", "node03-prd", "node04-prd"]
+        count  = 3
+        name   = ["node01-prd", "node02-prd", "node03-prd"]
         cores  = 4
-        memory = "4096"
+        memory = "8192"
         drive  = 80
-        node   = ["mothership", "overlord", "mothership", "overlord"]
-        ip     = ["20", "21", "22", "23"]
+        node   = ["mothership", "mothership", "mothership"]
+        ip     = ["20", "21", "22"]
       }
     }
     dev = {
@@ -45,22 +45,23 @@ locals {
       tags      = "k3s_dev"
       vlan      = 10
       k3master = {
-        count  = 1
-        name   = ["master-dev"]
-        cores  = 4
-        memory = "4096"
-        drive  = 20
-        node   = ["overlord"]
-        ip     = ["10"]
+        count   = 1
+        name    = ["master-dev"]
+        cores   = 2
+        memory  = "4096"
+        drive   = 20
+        node    = ["gatekeeper"]
+        ip      = ["10"]
+        storage = "local-zfs"
       }
       k3server = {
-        count  = 4
-        name   = ["node01-dev", "node02-dev", "node03-dev", "node04-dev"]
+        count  = 3
+        name   = ["node01-dev", "node02-dev", "node03-dev"]
         cores  = 4
-        memory = "4096"
+        memory = "8192"
         drive  = 60
-        node   = ["mothership", "overlord", "mothership", "overlord"]
-        ip     = ["20", "21", "22", "23"]
+        node   = ["mothership", "mothership", "mothership"]
+        ip     = ["20", "21", "22"]
       }
     }
     default = {
@@ -107,7 +108,7 @@ resource "proxmox_vm_qemu" "k3master" {
         disk {
           size    = local.config.k3master.drive
           format  = local.config.format
-          storage = local.config.storage
+          storage = local.config.k3master.storage != "" ? local.config.k3smster.storage : local.config.storage
         }
       }
     }
