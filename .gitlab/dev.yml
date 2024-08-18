@@ -1,7 +1,5 @@
 plan-development:
   stage: plan
-  environment:
-    name: development
   variables:
     ENVIRONMENT_NAME: dev
   allow_failure: false
@@ -10,8 +8,6 @@ plan-development:
 
 apply-development:
   stage: apply
-  environment:
-    name: development
   variables:
     ENVIRONMENT_NAME: dev
   allow_failure: false
@@ -21,8 +17,6 @@ apply-development:
 
 destroy-development:
   stage: destroy
-  environment:
-    name: development
   variables:
     ENVIRONMENT_NAME: dev
   allow_failure: false

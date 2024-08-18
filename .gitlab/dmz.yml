@@ -1,7 +1,5 @@
 plan-dmz:
   stage: plan
-  environment:
-    name: dmz
   variables:
     ENVIRONMENT_NAME: dmz
   allow_failure: false
@@ -10,8 +8,6 @@ plan-dmz:
 
 apply-dmz:
   stage: apply
-  environment:
-    name: dmz
   variables:
     ENVIRONMENT_NAME: dmz
   allow_failure: false
@@ -21,8 +17,6 @@ apply-dmz:
 
 destroy-dmz:
   stage: destroy
-  environment:
-    name: dmz
   variables:
     ENVIRONMENT_NAME: dmz
   allow_failure: false

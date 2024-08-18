@@ -1,7 +1,5 @@
 plan-production:
   stage: plan
-  environment:
-    name: production
   variables:
     ENVIRONMENT_NAME: prd
   allow_failure: false
@@ -10,8 +8,6 @@ plan-production:
 
 apply-production:
   stage: apply
-  environment:
-    name: production
   variables:
     ENVIRONMENT_NAME: prd
   allow_failure: false
@@ -21,8 +17,6 @@ apply-production:
 
 destroy-production:
   stage: destroy
-  environment:
-    name: production
   variables:
     ENVIRONMENT_NAME: prd
   allow_failure: false
