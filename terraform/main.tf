@@ -99,7 +99,7 @@ resource "proxmox_vm_qemu" "k3master" {
     ide {
       ide2 {
         cloudinit {
-          storage = local.config.k3master.storage != "" ? local.config.k3master.storage : local.config.storage
+          storage = try(local.config.k3master.storage, local.config.storage)
         }
       }
     }
@@ -108,7 +108,7 @@ resource "proxmox_vm_qemu" "k3master" {
         disk {
           size    = local.config.k3master.drive
           format  = local.config.format
-          storage = local.config.k3master.storage != "" ? local.config.k3master.storage : local.config.storage
+          storage = try(local.config.k3master.storage, local.config.storage)
         }
       }
     }
