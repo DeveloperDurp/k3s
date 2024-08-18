@@ -1,43 +1,31 @@
+stages:
+  - plan
+  - apply
+  - destroy
+
+variables:
+  WORKDIR: $CI_PROJECT_DIR/terraform
+  GITLAB_TF_ADDRESS: ${CI_API_V4_URL}/projects/${CI_PROJECT_ID}/terraform/state/${ENVIRONMENT_NAME}  
+
+image:
+  name: registry.internal.durp.info/opentofu/opentofu:latest
+  entrypoint: [""]
+
 include:
-  - project: 'developerdurp/yml'
-    ref: main
-    file: 
-      - 'pipelines/terraform.yml'
+  - local: .gitlab/dev.yml
+  - local: .gitlab/prd.yml
+  - local: .gitlab/dmz.yml
   - project: 'developerdurp/yml'
     ref: 'main'
     file: 
       - 'jobs/terraform.yml'
 
-plan-dmz:
-  stage: plan
-  environment:
-    name: dmz
-  variables:
-    ENVIRONMENT_NAME: dmz
+format:
+  stage: .pre
   allow_failure: false
-  extends: .terraform_plan
-  needs: ["validate","format"]
+  extends: .terraform_fmt
 
-
-apply-dmz:
-  stage: apply
-  environment:
-    name: dmz
-  variables:
-    ENVIRONMENT_NAME: dmz
+validate:
+  stage: .pre
   allow_failure: false
-  extends: .terraform_apply   
-  rules:
-    - when: manual  
-
-destroy-dmz:
-  stage: destroy
-  environment:
-    name: dmz
-  variables:
-    ENVIRONMENT_NAME: dmz
-  allow_failure: false
-  extends: .terraform_destroy  
-  rules:       
-    - when: manual
-
+  extends: .terraform_validate

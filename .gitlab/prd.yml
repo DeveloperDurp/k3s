@@ -1,0 +1,31 @@
+plan-production:
+  stage: plan
+  environment:
+    name: production
+  variables:
+    ENVIRONMENT_NAME: prd
+  allow_failure: false
+  extends: .terraform_plan
+  needs: ["validate","format"]  
+
+apply-production:
+  stage: apply
+  environment:
+    name: production
+  variables:
+    ENVIRONMENT_NAME: prd
+  allow_failure: false
+  extends: .terraform_apply   
+  rules:
+    - when: manual        
+
+destroy-production:
+  stage: destroy
+  environment:
+    name: production
+  variables:
+    ENVIRONMENT_NAME: prd
+  allow_failure: false
+  extends: .terraform_destroy  
+  rules:       
+    - when: manual     
