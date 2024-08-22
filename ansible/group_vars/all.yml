@@ -1,5 +1,6 @@
 ---
-k3s_version: v1.30.4+k3s1
+#k3s_version: v1.30.4+k3s1
+k3s_version: "{{ lookup('env', 'k3s_version') }}"
 ansible_user: administrator
 systemd_dir: /etc/systemd/system
 

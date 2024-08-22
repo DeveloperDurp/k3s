@@ -1,6 +1,6 @@
 - name: ansible copy file from remote to local.
   fetch:
     src: /home/administrator/.kube/config
-    dest: /drop/
+    dest: "/drop/config-{{ environment }}"
     flat: yes
   when: ansible_hostname == hostvars[groups['master'][0]]['ansible_hostname']
