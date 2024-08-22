@@ -1,5 +1,5 @@
 ---
-k3s_version: v1.29.2+k3s1
+k3s_version: v1.30.4+k3s1
 ansible_user: administrator
 systemd_dir: /etc/systemd/system
 
