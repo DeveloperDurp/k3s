@@ -10,7 +10,7 @@ locals {
         cores   = 2
         memory  = "4096"
         drive   = 20
-        node    = ["gatekeeper"]
+        node    = ["mothership"]
         ip      = ["10"]
         storage = "local-zfs"
       }
@@ -34,7 +34,7 @@ locals {
         cores   = 2
         memory  = "4096"
         drive   = 20
-        node    = ["gatekeeper"]
+        node    = ["mothership"]
         ip      = ["11"]
         storage = "local-zfs"
       }
@@ -58,7 +58,7 @@ locals {
         cores   = 2
         memory  = "4096"
         drive   = 20
-        node    = ["gatekeeper"]
+        node    = ["mothership"]
         ip      = ["10"]
         storage = "local-zfs"
       }
@@ -82,7 +82,7 @@ locals {
         cores   = 2
         memory  = "4096"
         drive   = 20
-        node    = ["gatekeeper"]
+        node    = ["mothership"]
         ip      = ["11"]
         storage = "local-zfs"
       }

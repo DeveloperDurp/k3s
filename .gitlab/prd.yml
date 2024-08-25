@@ -27,7 +27,7 @@ destroy-production:
 plan-production-infra:
   stage: plan
   variables:
-    ENVIRONMENT_NAME: prd-infa
+    ENVIRONMENT_NAME: prd-infra
   allow_failure: false
   extends: .terraform_plan
   needs: ["validate","format"]
