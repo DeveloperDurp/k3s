@@ -23,6 +23,29 @@ locals {
         node   = ["mothership", "mothership", "mothership"]
         ip     = ["20", "21", "22"]
       }
+      prd-infra = {
+        dnsserver = "192.168.11.1"
+        tags      = "k3s_prd_infra"
+        vlan      = 11
+        k3master = {
+          count   = 1
+          name    = ["master-prd-infra"]
+          cores   = 2
+          memory  = "4096"
+          drive   = 20
+          node    = ["gatekeeper"]
+          ip      = ["11"]
+          storage = "local-zfs"
+        }
+        k3server = {
+          count  = 3
+          name   = ["node01-prd-infra", "node02-prd-infra", "node03-prd-infra"]
+          cores  = 4
+          memory = "8192"
+          drive  = 80
+          node   = ["mothership", "mothership", "mothership"]
+          ip     = ["23", "24", "25"]
+        }
     }
     dev = {
       dnsserver = "192.168.10.1"
@@ -47,6 +70,29 @@ locals {
         node   = ["mothership", "mothership", "mothership"]
         ip     = ["20", "21", "22"]
       }
+      dev-infra = {
+        dnsserver = "192.168.10.1"
+        tags      = "k3s_dev_infra"
+        vlan      = 10
+        k3master = {
+          count   = 1
+          name    = ["master-dev-infra"]
+          cores   = 2
+          memory  = "4096"
+          drive   = 20
+          node    = ["gatekeeper"]
+          ip      = ["11"]
+          storage = "local-zfs"
+        }
+        k3server = {
+          count  = 3
+          name   = ["node01-dev-infra", "node02-dev-infra", "node03-dev-infra"]
+          cores  = 4
+          memory = "8192"
+          drive  = 80
+          node   = ["mothership", "mothership", "mothership"]
+          ip     = ["23", "24", "25"]
+        }
     }
     default = {
       sshkeys    = "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDEphzWgwUZnvL6E5luKLt3WO0HK7Kh63arSMoNl5gmjzXyhG1DDW0OKfoIl0T+JZw/ZjQ7iii6tmSLFRk6nuYCldqe5GVcFxvTzX4/xGEioAyG0IiUGKy6s+9xzO8QXF0EtSNPH0nfHNKcCjgwWAzM+Lt6gW0Vqs+aU5ICuDiEchmvYPz+rBaVldJVTG7m3ogKJ2aIF7HU/pCPp5l0E9gMOw7s0ABijuc3KXLEWCYgL39jIST6pFH9ceRLmu8Xy5zXHAkkEEauY/e6ld0hlzLadiUD7zYJMdDcm0oRvenYcUlaUl9gS0569IpfsJsjCejuqOxCKzTHPJDOT0f9TbIqPXkGq3s9oEJGpQW+Z8g41BqRpjBCdBk+yv39bzKxlwlumDwqgx1WP8xxKavAWYNqNRG7sBhoWwtxYEOhKXoLNjBaeDRnO5OY5AQJvONWpuByyz0R/gTh4bOFVD+Y8WWlKbT4zfhnN70XvapRsbZiaGhJBPwByAMGg6XxSbC6xtbyligVGCEjCXbTLkeKq1w0DuItY+FBGO3J2k90OiciTVSeyiVz9J/Y03UB0gHdsMCoVNrj+9QWfrTLDhM7D5YrXUt5nj2LQTcbtf49zoQXWxUhozlg42E/FJU/Yla7y55qWizAEVyP2/Ks/PHrF679k59HNd2IJ/aicA9QnmWtLQ== ansible"
