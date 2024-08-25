@@ -5,14 +5,14 @@ locals {
       tags      = "k3s-prd"
       vlan      = 11
       k3master = {
-        count  = 3
-        name   = ["master01-prd","master02-prd","master03-prd"]
-        cores  = 2
-        memory = "4096"
-        drive  = 20
-        node   = ["gatekeeper","mothership","overlord"]
-        ip     = ["11","12","13"]
-        storage    = "local-zfs"
+        count   = 3
+        name    = ["master01-prd", "master02-prd", "master03-prd"]
+        cores   = 2
+        memory  = "4096"
+        drive   = 20
+        node    = ["gatekeeper", "mothership", "overlord"]
+        ip      = ["11", "12", "13"]
+        storage = "local-zfs"
       }
       k3server = {
         count  = 3
@@ -29,14 +29,14 @@ locals {
       tags      = "k3s-dev"
       vlan      = 10
       k3master = {
-        count  = 3
-        name   = ["master01-dev","master02-dev","master03-dev"]
-        cores  = 2
-        memory = "4096"
-        drive  = 20
-        node   = ["gatekeeper","mothership","overlord"]
-        ip     = ["11","12","13"]
-        storage    = "local-zfs"
+        count   = 3
+        name    = ["master01-dev", "master02-dev", "master03-dev"]
+        cores   = 2
+        memory  = "4096"
+        drive   = 20
+        node    = ["gatekeeper", "mothership", "overlord"]
+        ip      = ["11", "12", "13"]
+        storage = "local-zfs"
       }
       k3server = {
         count  = 3
