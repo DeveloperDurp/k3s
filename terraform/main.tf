@@ -2,7 +2,7 @@ locals {
   env_config = {
     prd = {
       dnsserver = "192.168.11.1"
-      tags      = "k3s-prd"
+      tags      = "k3s_prd"
       vlan      = 11
       k3master = {
         count   = 3
@@ -19,14 +19,14 @@ locals {
         name   = ["node01-prd", "node02-prd", "node03-prd"]
         cores  = 4
         memory = "8192"
-        drive  = 80
+        drive  = 120
         node   = ["mothership", "mothership", "mothership"]
         ip     = ["21", "22", "23"]
       }
     }
     dev = {
       dnsserver = "192.168.10.1"
-      tags      = "k3s-dev"
+      tags      = "k3s_dev"
       vlan      = 10
       k3master = {
         count   = 3
@@ -43,7 +43,7 @@ locals {
         name   = ["node01-dev", "node02-dev", "node03-dev"]
         cores  = 4
         memory = "8192"
-        drive  = 60
+        drive  = 120
         node   = ["mothership", "mothership", "mothership"]
         ip     = ["21", "22", "23"]
       }
