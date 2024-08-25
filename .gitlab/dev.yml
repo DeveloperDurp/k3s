@@ -23,3 +23,29 @@ destroy-development:
   extends: .terraform_destroy  
   rules:       
     - when: manual
+
+plan-development-infra:
+  stage: plan
+  variables:
+    ENVIRONMENT_NAME: dev-infra
+  allow_failure: false
+  extends: .terraform_plan
+  needs: ["validate","format"]
+
+apply-development-infa:
+  stage: apply
+  variables:
+    ENVIRONMENT_NAME: dev-infra
+  allow_failure: false
+  extends: .terraform_apply
+  rules:
+    - when: manual
+
+destroy-development-infra:
+  stage: destroy
+  variables:
+    ENVIRONMENT_NAME: dev-infra
+  allow_failure: false
+  extends: .terraform_destroy
+  rules:
+    - when: manual

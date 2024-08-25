@@ -23,3 +23,29 @@ destroy-production:
   extends: .terraform_destroy  
   rules:       
     - when: manual     
+
+plan-production-infra:
+  stage: plan
+  variables:
+    ENVIRONMENT_NAME: prd-infa
+  allow_failure: false
+  extends: .terraform_plan
+  needs: ["validate","format"]
+
+apply-production-infa:
+  stage: apply
+  variables:
+    ENVIRONMENT_NAME: prd-infra
+  allow_failure: false
+  extends: .terraform_apply
+  rules:
+    - when: manual
+
+destroy-production-infra:
+  stage: destroy
+  variables:
+    ENVIRONMENT_NAME: prd-infra
+  allow_failure: false
+  extends: .terraform_destroy
+  rules:
+    - when: manual
