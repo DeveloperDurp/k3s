@@ -5,13 +5,13 @@ locals {
       tags      = "k3s_prd"
       vlan      = 11
       k3master = {
-        count   = 1
-        name    = ["master-prd"]
-        cores   = 2
-        memory  = "4096"
-        drive   = 20
-        node    = ["mothership"]
-        ip      = ["10"]
+        count  = 1
+        name   = ["master-prd"]
+        cores  = 2
+        memory = "4096"
+        drive  = 20
+        node   = ["mothership"]
+        ip     = ["10"]
       }
       k3server = {
         count  = 3
@@ -28,13 +28,13 @@ locals {
       tags      = "k3s_prd_infra"
       vlan      = 11
       k3master = {
-        count   = 1
-        name    = ["master-prd-infra"]
-        cores   = 2
-        memory  = "4096"
-        drive   = 20
-        node    = ["mothership"]
-        ip      = ["11"]
+        count  = 1
+        name   = ["master-prd-infra"]
+        cores  = 2
+        memory = "4096"
+        drive  = 20
+        node   = ["mothership"]
+        ip     = ["11"]
       }
       k3server = {
         count  = 3
@@ -51,13 +51,13 @@ locals {
       tags      = "k3s_dev"
       vlan      = 10
       k3master = {
-        count   = 1
-        name    = ["master-dev"]
-        cores   = 2
-        memory  = "4096"
-        drive   = 20
-        node    = ["mothership"]
-        ip      = ["10"]
+        count  = 1
+        name   = ["master-dev"]
+        cores  = 2
+        memory = "4096"
+        drive  = 20
+        node   = ["mothership"]
+        ip     = ["10"]
       }
       k3server = {
         count  = 3
@@ -74,13 +74,13 @@ locals {
       tags      = "k3s_dev_infra"
       vlan      = 10
       k3master = {
-        count   = 1
-        name    = ["master-dev-infra"]
-        cores   = 2
-        memory  = "4096"
-        drive   = 20
-        node    = ["mothership"]
-        ip      = ["11"]
+        count  = 1
+        name   = ["master-dev-infra"]
+        cores  = 2
+        memory = "4096"
+        drive  = 20
+        node   = ["mothership"]
+        ip     = ["11"]
       }
       k3server = {
         count  = 3
