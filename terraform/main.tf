@@ -2,16 +2,17 @@ locals {
   env_config = {
     prd = {
       dnsserver = "192.168.11.1"
-      tags      = "k3s_prd"
+      tags      = "k3s-prd"
       vlan      = 11
       k3master = {
-        count  = 1
-        name   = ["master-prd"]
+        count  = 3
+        name   = ["master01-prd","master02-prd","master03-prd"]
         cores  = 2
         memory = "4096"
         drive  = 20
-        node   = ["mothership"]
-        ip     = ["10"]
+        node   = ["gatekeeper","mothership","overlord"]
+        ip     = ["11","12","13"]
+        storage    = "local-zfs"
       }
       k3server = {
         count  = 3
@@ -20,44 +21,22 @@ locals {
         memory = "8192"
         drive  = 80
         node   = ["mothership", "mothership", "mothership"]
-        ip     = ["20", "21", "22"]
-      }
-    }
-    prd-infra = {
-      dnsserver = "192.168.11.1"
-      tags      = "k3s_prd_infra"
-      vlan      = 11
-      k3master = {
-        count  = 1
-        name   = ["master-prd-infra"]
-        cores  = 2
-        memory = "4096"
-        drive  = 20
-        node   = ["mothership"]
-        ip     = ["11"]
-      }
-      k3server = {
-        count  = 3
-        name   = ["node01-prd-infra", "node02-prd-infra", "node03-prd-infra"]
-        cores  = 4
-        memory = "8192"
-        drive  = 80
-        node   = ["mothership", "mothership", "mothership"]
-        ip     = ["23", "24", "25"]
+        ip     = ["21", "22", "23"]
       }
     }
     dev = {
       dnsserver = "192.168.10.1"
-      tags      = "k3s_dev"
+      tags      = "k3s-dev"
       vlan      = 10
       k3master = {
-        count  = 1
-        name   = ["master-dev"]
+        count  = 3
+        name   = ["master01-dev","master02-dev","master03-dev"]
         cores  = 2
         memory = "4096"
         drive  = 20
-        node   = ["mothership"]
-        ip     = ["10"]
+        node   = ["gatekeeper","mothership","overlord"]
+        ip     = ["11","12","13"]
+        storage    = "local-zfs"
       }
       k3server = {
         count  = 3
@@ -66,30 +45,7 @@ locals {
         memory = "8192"
         drive  = 60
         node   = ["mothership", "mothership", "mothership"]
-        ip     = ["20", "21", "22"]
-      }
-    }
-    dev-infra = {
-      dnsserver = "192.168.10.1"
-      tags      = "k3s_dev_infra"
-      vlan      = 10
-      k3master = {
-        count  = 1
-        name   = ["master-dev-infra"]
-        cores  = 2
-        memory = "4096"
-        drive  = 20
-        node   = ["mothership"]
-        ip     = ["11"]
-      }
-      k3server = {
-        count  = 3
-        name   = ["node01-dev-infra", "node02-dev-infra", "node03-dev-infra"]
-        cores  = 4
-        memory = "8192"
-        drive  = 80
-        node   = ["mothership", "mothership", "mothership"]
-        ip     = ["23", "24", "25"]
+        ip     = ["21", "22", "23"]
       }
     }
     default = {
