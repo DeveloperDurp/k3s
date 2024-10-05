@@ -12,7 +12,6 @@ locals {
         drive   = 20
         node    = ["gatekeeper", "mothership", "overlord"]
         ip      = ["11", "12", "13"]
-        storage = "local-zfs"
       }
       k3server = {
         count  = 3
@@ -36,7 +35,6 @@ locals {
         drive   = 20
         node    = ["gatekeeper", "mothership", "overlord"]
         ip      = ["11", "12", "13"]
-        storage = "local-zfs"
       }
       k3server = {
         count  = 3
