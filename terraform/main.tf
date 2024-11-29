@@ -52,21 +52,21 @@ locals {
       vlan      = 98
       k3master = {
         count  = 3
-        name = ["master01-dmz", "master02-dmz", "master03-dmz"]
+        name   = ["master01-dmz", "master02-dmz", "master03-dmz"]
         cores  = 2
         memory = "4096"
         drive  = 20
-        node = ["gatekeeper", "mothership", "overlord"]
-        ip = ["11", "12", "13"]
+        node   = ["gatekeeper", "mothership", "overlord"]
+        ip     = ["11", "12", "13"]
       }
       k3server = {
         count  = 3
-        name = ["node01-dmz", "node02-dmz", "node03-dmz"]
+        name   = ["node01-dmz", "node02-dmz", "node03-dmz"]
         cores  = 4
         memory = "8192"
         drive  = 120
-        node = ["mothership", "mothership", "mothership"]
-        ip = ["21", "22", "23"]
+        node   = ["mothership", "mothership", "mothership"]
+        ip     = ["21", "22", "23"]
       }
     }
     default = {
