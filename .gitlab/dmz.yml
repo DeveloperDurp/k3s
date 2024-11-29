@@ -1,0 +1,25 @@
+plan-dmz:
+  stage: plan
+  variables:
+    ENVIRONMENT_NAME: dmz
+  allow_failure: false
+  extends: .terraform_plan
+  needs: ["validate","format"]  
+
+apply-dmz:
+  stage: apply
+  variables:
+    ENVIRONMENT_NAME: dmz
+  allow_failure: false
+  extends: .terraform_apply   
+  rules:
+    - when: manual        
+
+destroy-dmz:
+  stage: destroy
+  variables:
+    ENVIRONMENT_NAME: dmz
+  allow_failure: false
+  extends: .terraform_destroy  
+  rules:       
+    - when: manual

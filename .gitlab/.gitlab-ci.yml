@@ -14,6 +14,7 @@ image:
 include:
   - local: .gitlab/dev.yml
   - local: .gitlab/prd.yml
+  - local: .gitlab/dmz.yml
   - project: 'developerdurp/yml'
     ref: 'main'
     file: 
