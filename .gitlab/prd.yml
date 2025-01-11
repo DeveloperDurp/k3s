@@ -14,6 +14,8 @@ apply-production:
   extends: .terraform_apply   
   rules:
     - when: manual        
+  needs: ["plan-production"]
+
 
 destroy-production:
   stage: destroy
@@ -23,3 +25,4 @@ destroy-production:
   extends: .terraform_destroy  
   rules:       
     - when: manual
+  needs: ["plan-production"]
