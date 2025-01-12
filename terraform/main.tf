@@ -23,6 +23,29 @@ locals {
         ip     = ["21", "22", "23"]
       }
     }
+    infra = {
+      dnsserver = "192.168.12.1"
+      tags      = "k3s_infra"
+      vlan      = 12
+      k3master = {
+        count  = 3
+        name   = ["master01-infra", "master02-infra", "master03-infra"]
+        cores  = 2
+        memory = "4096"
+        drive  = 20
+        node   = ["gatekeeper", "mothership", "overlord"]
+        ip     = ["11", "12", "13"]
+      }
+      k3server = {
+        count  = 3
+        name   = ["node01-infra", "node02-infra", "node03-infra"]
+        cores  = 4
+        memory = "8192"
+        drive  = 120
+        node   = ["overlord", "overlord", "overlord"]
+        ip     = ["21", "22", "23"]
+      }
+    }
     dev = {
       dnsserver = "192.168.10.1"
       tags      = "k3s_dev"

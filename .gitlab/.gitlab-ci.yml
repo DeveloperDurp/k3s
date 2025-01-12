@@ -15,6 +15,7 @@ include:
   - local: .gitlab/dev.yml
   - local: .gitlab/prd.yml
   - local: .gitlab/dmz.yml
+  - local: .gitlab/infra.yml
   - project: 'developerdurp/yml'
     ref: 'main'
     file: 
