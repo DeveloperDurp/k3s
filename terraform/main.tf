@@ -142,6 +142,7 @@ resource "proxmox_vm_qemu" "k3master" {
     }
   }
   network {
+    id     = 0
     model  = "virtio"
     bridge = "vmbr0"
     tag    = local.config.vlan
@@ -192,6 +193,7 @@ resource "proxmox_vm_qemu" "k3server" {
     }
   }
   network {
+    id     = 0
     model  = "virtio"
     bridge = "vmbr0"
     tag    = local.config.vlan
