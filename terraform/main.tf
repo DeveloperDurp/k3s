@@ -116,7 +116,7 @@ resource "proxmox_vm_qemu" "k3master" {
   agent       = 1
   cores       = local.config.k3master.cores
   sockets     = 1
-  cpu         = "host"
+  cpu_type    = "host"
   memory      = local.config.k3master.memory
   scsihw      = "virtio-scsi-pci"
   #bootdisk    = "scsi0"
@@ -167,7 +167,7 @@ resource "proxmox_vm_qemu" "k3server" {
   agent       = 1
   cores       = local.config.k3server.cores
   sockets     = 1
-  cpu         = "host"
+  cpu_type    = "host"
   memory      = local.config.k3server.memory
   scsihw      = "virtio-scsi-pci"
   #bootdisk    = "scsi0"
