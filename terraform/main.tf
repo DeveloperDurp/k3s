@@ -41,7 +41,7 @@ locals {
         name   = ["node01-infra", "node02-infra", "node03-infra"]
         cores  = 4
         memory = "8192"
-        drive  = 120
+        drive  = 240
         node   = ["overlord", "overlord", "overlord"]
         ip     = ["21", "22", "23"]
       }
